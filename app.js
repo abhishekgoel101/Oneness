@@ -2,6 +2,7 @@ var express= require('express');
 var session=require('express-session');
 var bodyParser=require('body-parser');
 var mongoose=require('mongoose');
+require('./models/connection');
 var app=express();
 
 app.set('views',__dirname+'/views');
