@@ -13,7 +13,8 @@ var userSchema=new Schema({
         required:true
     },
     name:{
-        type:String
+        type:String,
+        default:""
     },
     role:{
         type:String,
@@ -23,7 +24,7 @@ var userSchema=new Schema({
     },
     status:{
         type:Boolean,
-        default:true,
+        default:false,
         required:true
     },
     activated:{
@@ -38,11 +39,9 @@ var userSchema=new Schema({
     },
     dob:{
         type:Date,
-        default:Date.now
     },
     phone:{
-        type:number
-
+        type:Number
     },
     city:{
         type:String
@@ -59,11 +58,13 @@ var userSchema=new Schema({
     expectation:{
         type:String
     },
-    tags:[
-        {type:String}
-    ],
 
     /*
+    
+    tags:[
+        {type:String}
+    ],//it may be same as interests
+
     //link with communities also
     //array of communities created,member,requested,
 

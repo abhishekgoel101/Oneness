@@ -86,6 +86,14 @@ header{
 <div class="container" style="margin-top: 8%">
     <div  class="responsive-login-form allSides" style="height: 340px;background-color: #fff;">
       <p style="padding: 1%;font-size: 34px;">Log Into Your Account</p>
+
+    <%  if(incorrect)
+    { %>
+       <center>
+        <div class="alert alert-danger" style="width:90%">Username/Password Incorrect.</div>
+      </center>  
+      <% }
+      %>
       
         <form action="/" method="post">
           <div class="form-group" style="margin: 10px">

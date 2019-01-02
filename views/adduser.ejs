@@ -1,8 +1,10 @@
 
 <!DOCTYPE html>
 <html>
-<body>
 
+<% include partials/header %>
+
+<body>
 
 <div id="wrapper">
 <%include partials/sidebar%>
@@ -16,17 +18,28 @@
 
 <div class="container">
   <center>
-   
-  </center>
+<% if(add==true)
+{ %>
+<div class="alert alert-success alert-dismissible fade in" style="width: 33%;text-align: center;margin-top:20px">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>User Saved and Mail Sent Successfully</strong>
+</div>
+
+<% }
+%>
+
+</center>
     <div class="col-sm-3">
     </div>
     <div class="col-sm-6" style="background-color:#fff;border:5px solid rgba(0,0,0,0.1);margin-top:40px">
       <br />
 
       <div class="alert alert-dismissible" style="border:1px solid #E2E5E1" id="alert-div-avilability">
-          <center>
-            <label id="avilability"></label>
-          </center>
+      
+      <center>
+            <label id="avilability" style="color:#8B8B8B;"></label>
+                     
+            </center>
       </div>
 
           <h1>Add User</h1>
@@ -48,9 +61,9 @@
                 <label>Role:</label><br/>
                 <select data-style="btn-info" name="roleoptions" class="form-control">
                     <optgroup label="Select User Role">
-                      <option value="user">User</option>
-                        <option value="commuity manager">Commuity Manager</option>
-                      <option value="admin">Admin</option>
+                      <option value="User">User</option>
+                        <option value="Commuity Manager">Commuity Manager</option>
+                      <option value="Admin">Admin</option>
                     </optgroup>
                 </select>
               </div>
@@ -75,77 +88,147 @@ $(selector).removeClass('active');
 $('#add-user-nav').addClass('active');
 </script>
 
-<script>
-  var userExist=false;
-  function validatePhone(phone){
-      var validity = /^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/.test(phone);
-      return validity;
+ <script>
+
+
+    var username=document.getElementById('username');
+
+/*
+    username.onchange=function(){
+        if(this.value.trim()){
+        var username=this.value.trim();    
+        $.ajax({
+        type:'POST',
+        url:'/admin/checkuser',
+        contentType : "application/json",
+        context:this,
+        data:JSON.stringify({username:this.value.trim()}),
+        success:function(data){
+            console.log(data);
+            document.getElementById('alert-div-avilability').style.display="block";
+            if(data.valid)
+            {
+              console.log(this);  
+            document.getElementById('avilability').textContent=this.value.trim()+" is Available";
+            }
+            else
+            {
+            document.getElementById('avilability').textContent=this.value.trim()+" is not Available";
+            }
+
+            },
+        error:function(jqxhr,err){
+            console.log(err); 
+            }
+
+
+        });
     }
-$(document).ready(function(){
-    $("#username").change(function(){
-        if($('#username').val().trim())
-        {
-            var data=$('#username').val().trim().toLowerCase();
-              $.ajax({
-                  type: 'POST',
-                  data: JSON.stringify({username:data}),
-                  contentType: 'application/json',
-                  url: '/admin/api/ExistenceUser',
-                  success: function (response) {
-                    console.log(response);
-                      if(response)
-                      {
-                        userExist=true;
-                        // $('#alert-div-avilability').removeClass('alert-success').addClass('alert-danger');
-                        $('#alert-div-avilability').css('display','block');
-                        $('#avilability').css("color", "#8B8B8B");
-                        $('#avilability').text("User "+data+" is already exist");
-                      }
-                      else{
-                        userExist=false;
-                        // $('#alert-div-avilability').removeClass('alert-danger').addClass('alert-success');
-                        $('#alert-div-avilability').css('display','block');
-                        $('#avilability').css("color", "#8B8B8B");
-                        $('#avilability').text(data+" is Avilable");
-                      }
-                  },
-                  error: function (response) {
 
-                  }
-              });
-        }
-        else{
-          $('#alert-div-avilability').css('display','none');
-        }
-    });
-});
-$('#form').submit(function () {
+    }
+*/
 
-  if(userExist)
-  {
-    $.alert({
-        title: 'Inavlid!',
-        content: 'User already exist',
-    });
-    $('#username').val('');
-    return false;
-  }
-  else {
-        if(validatePhone($('#phone').val()))
-        {
-          return true;
-        }
-        else {
-          $.alert({
-              title: 'Inavlid! Phone Number',
-              content: 'Phone number is not valid',
-          });
-          $('#phone').val('');
-          return false;
-        }
-  }
 
-});
-</script>
+    username.onchange=function(){
+    var username_value=this.value.trim().toLowerCase();
+            
+    if(username_value)
+    {
+        $.ajax({
+        type:'POST',
+        url:'/admin/checkuser',
+        contentType : "application/json",
+        data:JSON.stringify({username:username_value}),
+        success:function(data){
+        document.getElementById('alert-div-avilability').style.display="block";
+
+            if(data.valid)
+            {
+            document.getElementById('avilability').textContent=username_value+" is Available";                
+            }
+            else
+            {
+              document.getElementById('avilability').textContent=username_value+" is not Available";
+            }
+            
+        },
+        error:function(jqxhr,err){
+            console.log(err); 
+            }
+
+        });
+
+
+    }
+    
+    }
+
+
+    function validatePhone(phone)
+    {
+      if(phone.match(/^\d{10}$/)==null)
+      {
+        return false;
+      }
+      else
+      {return true;
+      }
+
+    }
+    var form=document.getElementById('form');
+    
+
+    form.onsubmit=function(e)
+    { 
+     e.preventDefault();
+     var username_value=username.value.trim().toLowerCase();   
+
+    if(username_value)
+    {
+      $.ajax({
+        type:'POST',
+        url:'/admin/checkuser',
+        contentType : "application/json",
+        data:JSON.stringify({username:username_value}),
+        success:function(data){
+            if(data.valid)
+            { 
+                if(!validatePhone(document.getElementById('phone').value))
+                {
+                    $.alert({
+                        title: 'Inavlid! Phone Number',
+                        content: 'Phone number is not valid',
+                    });
+
+                }
+                else
+                {
+                    username.value=username_value;
+                    form.submit();
+                }
+
+            }
+            else
+            {
+                $.alert({
+                    title: 'Inavlid!',
+                    content: 'User already exist',
+                });
+        
+            }
+            
+        },
+        error:function(jqxhr,err){
+            console.log(err); 
+            }
+
+        });
+
+    }
+
+    }
+
+ </script>
+
   </body>
 </html>
