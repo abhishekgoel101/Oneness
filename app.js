@@ -18,6 +18,7 @@ app.use(session({
 }));
 
 app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname+'/public1'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -35,6 +36,7 @@ var authenticate=function(req,res,next){
 }
 
 app.get('/',function(req,res){
+    return res.render('main');
     req.session.is_logged_in=true;
     return res.render('login');
     });
@@ -45,15 +47,14 @@ return res.send('valid');
 
  app.get('*',function(req,res){
    // req.session.destroy();
-    res.set('Content-type','text/html');
-    res.status(404).send("<h1>Not Found</h1>");
+   res.status(404);
+   res.render('not_found'); 
     
 });
 app.post('*',function(req,res){
 
-    res.set('Content-type','text/html');
-    res.status(404).send("<h1>Not Found</h1>");
-    
+    res.status(404);
+   res.render('not_found'); 
 });
 
 app.listen(port,function(){
