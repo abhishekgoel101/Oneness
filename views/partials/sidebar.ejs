@@ -1,4 +1,8 @@
 
+<% 
+if(header.status==true)
+{
+%>
 <!DOCTYPE html>
 <html>
 
@@ -11,7 +15,7 @@
      <li class="mobile-view-dp">
        <div style="margin-right: 10px">
              <center>
-            <img src="/Upload/Profile/1546207758609.jpg" style="height: 60px;width: 60px;border-radius:50%">
+            <img src="<%=header.image%>" style="height: 60px;width: 60px;border-radius:50%">
         </center>
           </div>
      </li>
@@ -24,7 +28,10 @@
        </a>
      </li>
 
-     
+    <% 
+    if(header.role=='Admin' && header.state=='Admin')
+    {
+      %>     
        <li id="home-nav">
           <a href="/"><span class="fa-stack fa-lg pull-left">
             <i class="fa fa-home fa-stack-1x "></i></span>Home
@@ -54,26 +61,69 @@
 
       
         <li id="community-list-nav">
-           <a href="/community/communityList"><span class="fa-stack fa-lg pull-left">
+           <a href="/admin/communitylist"><span class="fa-stack fa-lg pull-left">
              <i class="fa fa-list-alt fa-stack-1x "></i></span>Community List</a>
         </li>
       
+    <% 
+        }
+        else{ 
+    %>
+   <li id="edit-profile-nav">
+            <a href="/profile"><span class="fa-stack fa-lg pull-left">
+              <i class="fa fa-user fa-stack-1x "></i></span>
+              <%=header.name %>
+            </a>
+          </li>
+      
+  
 
       
-        <li id="switch-asuser-nav">
-          <a onclick="switchState('Switch As User')"><span class="fa-stack fa-lg pull-left">
-            <i class="fa fa-toggle-off fa-stack-1x "></i></span>
-            Switch As User
-          </a>
+        <li id="community-panel-nav">
+           <a href="/community/communitypanel"><span class="fa-stack fa-lg pull-left">
+             <i class="fa fa-users fa-stack-1x "></i></span>Communities
+           </a>
         </li>
-      
 
-      
+    <% 
+        }   
+    %>   
+    
+    <% 
+    if(header.role=='Admin')
+    {
+      %>  
+    
+         <li id="switch-asuser-nav">
+          <a onclick="switchState('<%=header.state%>')"><span class="fa-stack fa-lg pull-left">
+            <% if(header.state=='Admin')
+            { %>
+            <i class="fa fa-toggle-off fa-stack-1x ">
+            <% } else {
+            %>
+            <i class="fa fa-toggle-on fa-stack-1x ">
+            <% } 
+            %>
+            </i></span>
+            Switch As <%=header.state%>
+          </a>
+              
+        </li>
+     <%
+    }
+    %> 
+
+    <% 
+    if(header.role=='Admin' && header.state=='Admin')
+    {
+    %>
         <li id="admin-tag-panel">
-          <a href="/tag"><span class="fa-stack fa-lg pull-left">
+          <a href="/admin/tag"><span class="fa-stack fa-lg pull-left">
             <i class="fa fa-tags fa-stack-1x "></i></span>Tag Panel</a>
         </li>
-      
+      <%
+    }
+      %>
 
       <li id="change-password-nav">
         <a href="/changePassword"><span class="fa-stack fa-lg pull-left">
@@ -107,15 +157,8 @@
       $("#wrapper").toggleClass("toggled-pc");
       $('#menu ul').hide();
   }
-   // $("#sidebar-wrapper").hover(function(){
-   //   $("#wrapper").toggleClass("toggled-pc");
-   //   $('#menu ul').hide();
-   // });
-//----------------------On Hoover or onclick menuBar-------------------------------
-
-   function initMenu() {
-      // $("#wrapper").toggleClass("toggled-pc");
-      // $('#menu ul').hide();
+  
+   function initMenu() { 
 
       $('#menu ul').hide();
       $('#menu ul').children('.current').parent().show();
@@ -136,8 +179,16 @@
    $(document).ready(function() {
       initMenu();
    });
+
+
+
+
+
 </script>
 
 
 </body>
 </html>
+<%
+}
+%>

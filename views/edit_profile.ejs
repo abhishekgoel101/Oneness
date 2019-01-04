@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+<% include partials/header %>
+
+<body>
+
+<div id="wrapper">
+
+<% include partials/sidebar %>
+
+<div id="page-content-wrapper" style="padding:0;margin-top:60px"> <!--Margin Top is new-->
+         <div class="container-fluid page-content-div" style="padding:0">
+            <div class="row">
+               <div class="col-lg-12 scoll-possible" style="padding:0">
+
+
+<style>
+.form-control[disabled]{
+    background-color: #f5f5f5;
+    opacity: 1;
+}
+.select2-dropdown{
+  display:none;
+}
+</style>
+
+<div class="profile-pic-center-main-div mobile">
+  <img src="<%=user.image%>" class="profile-pic-center allSides" />
+</div>
+
+
+<div class='container'>
+  <div style="margin-top:30px;">
+    <div class="col-12">
+          <div class="card allSidesSoft">
+              <div class="card-body">
+
+      <form  method="post" action="/editProfile" enctype="multipart/form-data" id="editProfile">
+
+                <div class="d-flex">
+              <div class="image-container">
+                        <img src="<%=user.image%>" id="user-profile-image" style="width: 150px; height: 150px" class="img-thumbnail allSidesSoft" />
+                        <div class="middle">
+                            <input type="button" class="btn btn-default btn-sm" id="changeProfilePicBtn" value="Change" />
+                            <input type="file" style="display: none;" id="profileUpload" name="profilePhoto" />
+                        </div>
+   
+                </div>
+             </div>
+
+                <br />
+                  <div class="panel-group">
+                    <!--Form panel-->
+                    <div class="panel panel-default editUserPanel">
+                      <div class="panel-heading">Basic Info</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                    <label>Email :</label>
+                                    <input type="text" value="<%=user.email%>" class="form-control" name="username" disabled="true"  />
+                            </div>
+                            <div class="form-group">
+                                <label>Name :</label>
+                                <input type="text" value="<%=user.name%>" class="form-control" name="name" autocomplete="off" required pattern=".*\S+.*" title="This field can't be empty"/>
+                            </div>
+                            <div class="form-group col-sm-5" style="padding:0">
+                                <label>DOB :</label>
+                                <input class="form-control dobDate" id="date" value='<%=user.dob%>' name="dob" placeholder="DD/MM/YYYY" type="text" autocomplete="off" required/>
+                            </div>
+                            <div class="form-group col-sm-5 col-sm-push-2" style="padding:0">
+                                    <label>Gender :</label>
+                                    <select name="gender" id="gender" class="form-control">
+                                        <optgroup label="Select Gender">
+                                    
+                                        <option value="Male">Male</option>
+                                    
+
+                                    
+                                        <option value="Female">Female</option>
+                                    
+
+                                    
+                                        <option value="Transgender">Transgender</option>
+                                    
+                                    </optgroup>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default editUserPanel">
+                      <div class="panel-heading">Contact Info</div>
+                        <div class="panel-body">
+                          <div class="form-group">
+                                  <label>Phone :</label>
+                                  <input type="text" value="<%=user.phone%>" class="form-control" name="phone" id="phone" maxlength="10" required />
+                          </div>
+                          <div class="form-group">
+                                  <label>City :</label>
+                                  <input type="text" value="<%=user.city%>" class="form-control" name="city" required pattern=".*\S+.*" title="This field can't be empty"/>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="panel panel-default editUserPanel">
+                        <div class="panel-heading">Personal Info</div>
+                          <div class="panel-body">
+
+                            <div class="form-group">
+                              <label>Interests :</label>
+                              <div class="tag-conatiner-custom-div">
+                                <select id="interestsEditor" name='interests' class="form-control input-sm select2-multiple" style="width:100%" multiple >
+                                  <!--Tags option appended here-->
+                                  
+                                    
+
+                                  
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                                    <label>Tell us a bit more about your journey:</label>
+                                    <textarea type="text" class="form-control" name="journey"><%=user.journey%></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                    <label>What are your expectations from the communities?</label>
+                                    <textarea type="text" class="form-control" name="expectation"><%=user.expectation%></textarea>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      <br />
+
+                      <div class="form-group">
+                    <% if(user.status)
+                    {
+                    %>    
+                              <a href="/changePassword" class="btn btn-warning pull-left btnEditForm" style="margin:1px">Change Password</a>
+                    <%
+                    }
+                    %>    
+                              <a href="/profile" class="btn btn-danger pull-right btnEditForm" style="margin:1px">Cancel</a>
+                              <input type="submit" class="btn btn-primary pull-right btnEditForm" style="margin:1px" value="Update" />
+                      </div>
+
+                    </div>
+                </form>
+              </div>
+         </div>
+      </div>
+  </div>
+</div>
+
+<br />
+
+</div>
+</div>
+</div>
+</div> <!--Header-->
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<script src="/javascripts/Common.js"></script>
+<script src="/Plugins/js/select2.min.js"></script>
+
+<script>
+var selector = '.nav li';
+$(selector).removeClass('active');
+$('#edit-profile-nav').addClass('active');
+</script>
+
+<script>
+var date=OnlyDate($('.dobDate').val());
+if(date.length==10){
+  $('.dobDate').val(date);
+} else {
+  $('.dobDate').attr("placeholder", date);
+}
+
+$(document).ready(function(){
+        var date_input=$('input[name="dob"]');
+        date_input.datepicker({
+            todayHighlight: true,
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            orientation: "auto top"
+        })
+    })
+</script>
+<script>
+
+if(vali.existDecument($('#interestsEditor')))
+{
+<%
+
+for(var i=0;i<user.interests.length;i++)
+{
+%>    
+var newOption = new Option('<%=user.interests[i]%>','<%=user.interests[i]%>', true,true);
+$('#interestsEditor').append(newOption).trigger('click');
+<%
+}
+%>
+
+  $( "#interestsEditor" ).select2({
+    theme: "bootstrap",
+    tags: true,
+    placeholder: "Enter interests...",
+    tokenSeparators: [',', ' '],
+    containerCssClass: ':all:'
+  });
+}
+$('.select2-search__field').css('width','100%')
+</script>
+
+<script>
+$('#changeProfilePicBtn').on('click',function(){
+$('#profileUpload').trigger('click');
+});
+$('#profileUpload').on('change',function(){
+if(validImage(this))
+{
+readURL(this);
+
+}
+
+});
+
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#user-profile-image').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#gender").val("<%=user.gender%>");
+
+    var form=document.getElementById('editProfile');
+    
+    form.onsubmit=function(e)
+    { 
+        e.preventDefault();
+
+        if(!validatePhone(document.getElementById('phone').value))
+        {
+            $.alert({
+                title: 'Inavlid! Phone Number',
+                content: 'Phone number is not valid',
+            });
+
+        }
+        else
+        {
+            if(document.getElementById('profileUpload').value=="")
+            {
+            
+                $.confirm({
+                draggable:false,
+                title: 'Default Image Upload',
+                content: 'Latest Image uploaded was invalid.Default image will be uploaded.Do you want to upload valid image?',
+                buttons: {
+                    yes:{
+                    text: 'YES',
+                    btnClass: 'btn-green'
+
+                    },
+                    no:{
+                    text: 'NO',
+                    btnClass: 'btn-red',
+                    action: function(){
+                        form.submit();
+                        }
+                      }
+
+                    }
+                });
+
+            }
+            else
+            {
+            form.submit();
+            }
+
+        }
+
+
+    }
+
+
+</script>
+
+    </body>
+</html>

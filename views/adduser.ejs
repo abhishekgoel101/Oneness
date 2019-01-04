@@ -7,7 +7,7 @@
 <body>
 
 <div id="wrapper">
-<%include partials/sidebar%>
+<% include partials/sidebar %>
 
 <div id="page-content-wrapper" style="padding:0;margin-top:60px"> <!--Margin Top is new-->
          <div class="container-fluid page-content-div" style="padding:0">
@@ -90,43 +90,7 @@ $('#add-user-nav').addClass('active');
 
  <script>
 
-
     var username=document.getElementById('username');
-
-/*
-    username.onchange=function(){
-        if(this.value.trim()){
-        var username=this.value.trim();    
-        $.ajax({
-        type:'POST',
-        url:'/admin/checkuser',
-        contentType : "application/json",
-        context:this,
-        data:JSON.stringify({username:this.value.trim()}),
-        success:function(data){
-            console.log(data);
-            document.getElementById('alert-div-avilability').style.display="block";
-            if(data.valid)
-            {
-              console.log(this);  
-            document.getElementById('avilability').textContent=this.value.trim()+" is Available";
-            }
-            else
-            {
-            document.getElementById('avilability').textContent=this.value.trim()+" is not Available";
-            }
-
-            },
-        error:function(jqxhr,err){
-            console.log(err); 
-            }
-
-
-        });
-    }
-
-    }
-*/
 
 
     username.onchange=function(){
@@ -164,17 +128,6 @@ $('#add-user-nav').addClass('active');
     }
 
 
-    function validatePhone(phone)
-    {
-      if(phone.match(/^\d{10}$/)==null)
-      {
-        return false;
-      }
-      else
-      {return true;
-      }
-
-    }
     var form=document.getElementById('form');
     
 
@@ -227,6 +180,45 @@ $('#add-user-nav').addClass('active');
     }
 
     }
+
+            /*
+            username.onchange=function(){
+                if(this.value.trim()){
+                var username=this.value.trim();    
+                $.ajax({
+                type:'POST',
+                url:'/admin/checkuser',
+                contentType : "application/json",
+                context:this,
+                data:JSON.stringify({username:this.value.trim()}),
+                success:function(data){
+                    console.log(data);
+                    document.getElementById('alert-div-avilability').style.display="block";
+                    if(data.valid)
+                    {
+                    console.log(this);  
+                    document.getElementById('avilability').textContent=this.value.trim()+" is Available";
+                    }
+                    else
+                    {
+                    document.getElementById('avilability').textContent=this.value.trim()+" is not Available";
+                    }
+
+                    },
+                error:function(jqxhr,err){
+                    console.log(err); 
+                    }
+
+
+                });
+            }
+
+            }
+        */
+
+
+
+
 
  </script>
 

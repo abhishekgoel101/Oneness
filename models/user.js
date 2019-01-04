@@ -1,62 +1,77 @@
-var mongoose=require('mongoose');
-var Schema=mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var userSchema=new Schema({
-    _id:Schema.Types.ObjectId,
-    email:{
-        type:String,
-        required:true,
-        unique:true
+var userSchema = new Schema({
+    _id: Schema.Types.ObjectId,
+    email: {
+        type: String,
+        required: true,
+        unique: true
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
     },
-    name:{
-        type:String,
-        default:""
+    name: {
+        type: String,
+        default: ""
     },
-    role:{
-        type:String,
-        required:true,
-        enum:['Admin','Commuity Manager','User'],
-        default:'User'
+    role: {
+        type: String,
+        required: true,
+        enum: ['Admin', 'Commuity Manager', 'User'],
+        default: 'User'
     },
-    status:{
-        type:Boolean,
-        default:false,
-        required:true
+    status: {
+        type: Boolean,
+        default: false,
+        required: true
     },
-    activated:{
-        type:Boolean,
-        default:true,
-        required:true
+    activated: {
+        type: Boolean,
+        default: true,
+        required: true
     },
-    gender:{
-        type:String,
-        default:'Male',
-        enum:['Male','Female','Transgender']
+    gender: {
+        type: String,
+        default: 'Male',
+        enum: ['Male', 'Female', 'Transgender'],
+        required: true
     },
-    dob:{
-        type:Date,
+    dob: {
+        type: Date,
+        default: Date.now
+
     },
-    phone:{
-        type:Number
+    phone: {
+        type: Number,
+        default: 9999999999,
+        required: true
+
     },
-    city:{
-        type:String
+    city: {
+        type: String,
+        required: true,
+        default: ""
     },
-    image:{
-        type:String
+    image: {
+        type: String,
+        required: true,
+        default: ""
     },
-    interests:[
-        {type:String}
-    ],
-    journey:{
-        type:String
+    interests: {
+        type: [{ type: String }],
+        default: []
     },
-    expectation:{
-        type:String
+    journey: {
+        type: String,
+        default: ""
+
+    },
+    expectation: {
+        type: String,
+        default: ""
+
     },
 
     /*
@@ -77,6 +92,6 @@ var userSchema=new Schema({
 
 });
 
-var User=mongoose.model('User',userSchema);
+var User = mongoose.model('User', userSchema);
 
-module.exports=User;
+module.exports = User;
