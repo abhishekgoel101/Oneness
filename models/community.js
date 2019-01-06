@@ -1,44 +1,78 @@
-var mongoose=require('mongoose');
-var Schema=mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var communitySchema=new Schema({
+var communitySchema = new Schema({
 
-    _id:Schema.Types.ObjectId,
-    name:{
-        type:String,
-        required:true
+    _id: Schema.Types.ObjectId,
+    name: {
+        type: String,
+        required: true
     },
-    description:{
-        type:String,
-        required:true
+    description: {
+        type: String,
+        required: true
     },
-    owner:{
-        type:Schema.Types.ObjectId,
-        required:true
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    rule:{
-        type:String,
-        enum:['Direct','Permission'],
-        default:'Direct',
-        required:true
+    rule: {
+        type: String,
+        enum: ['Direct', 'Permission'],
+        default: 'Direct',
+        required: true
     },
-    activated:{
-        type:Boolean,
-        default:true,
-        required:true
+    status: {
+        type: String,
+        enum: ['Activated', 'Deactivated'],
+        default: 'Activated',
+        required: true
     },
-    image:{
-        type:String
+    image: {
+        type: String,
+        required: true,
+        default: ""
     },
-    created:{
-        type:Date,
-        default:Date.now,
-        required:true
+    dateCreated: {
+        type: Date,
+        default: Date.now,
+        required: true
     },
-    location:{
-        type:String
+    location: {
+        type: String,
+        default: 'Not Added',
+        required: true
     },
-    
+    admins: {                    //these are only admins array.Owner not here
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        default: []
+    },
+    members: {        //Here those member which are neither owner nor admin. 
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        default: []
+    },
+
+    requests: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        default: []
+    },
+    invitedUsers: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        default: []
+    },
 
     /*
     group admin array,
@@ -56,7 +90,7 @@ var communitySchema=new Schema({
 
 });
 
-var Community=mongoose.model('Community',communitySchema);
+var Community = mongoose.model('Community', communitySchema);
 
-module.exports=Community;
+module.exports = Community;
 

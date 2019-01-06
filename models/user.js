@@ -44,8 +44,8 @@ var userSchema = new Schema({
 
     },
     phone: {
-        type: Number,
-        default: 9999999999,
+        type: String,
+        default: "9999999999",
         required: true
 
     },
@@ -72,6 +72,36 @@ var userSchema = new Schema({
         type: String,
         default: ""
 
+    },
+    ownerCommunity: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Community'
+        }],
+        default: []
+    },
+
+    myCommunity: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Community'
+        }],
+        default: []
+    },
+
+    requestedCommunity: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Community'
+        }],
+        default: []
+    },
+    invitesCommunity: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Community'
+        }],
+        default: []
     },
 
     /*

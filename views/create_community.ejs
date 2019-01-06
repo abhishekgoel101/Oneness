@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html>
+
+<% include partials/header %>
+
+<body>
+
+<div id="wrapper">
+<% include partials/sidebar %>
+
+<div id="page-content-wrapper" style="padding:0;margin-top:60px"> <!--Margin Top is new-->
+         <div class="container-fluid page-content-div" style="padding:0">
+            <div class="row">
+               <div class="col-lg-12 scoll-possible" style="padding:0">
+
+
+
+<head>
+  <link rel="stylesheet" href="/Plugins/css/trumbowyg.css" />
+</head>
+<!--====================================================================-->
+<div class="community-header-top" style="height:50px;padding-top:6px;">
+<div class="col-sm-12 community-sub-head">
+    <a class="btn community-head-btn active" href="/community/communitypanel">
+      <i class="fa fa-users"></i>
+    </a>
+    <a class="btn community-head-btn" style="margin-left:10px" href="/community/list">
+      <i class="fa fa-search"></i>
+    </a>
+</div>
+</div>
+<!--====================================================================-->
+<style>
+@media(max-width:768px){
+  .form-group{
+    padding:0 10px 0 10px;
+  }
+}
+</style>
+
+<div class="align-center-all">
+  <div class="container" >
+    <center>
+<% if(add==true)
+{ %>
+<div class="alert alert-success alert-dismissible fade in" style="width: 33%;text-align: center;margin-top:20px">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Community created Successfully</strong>
+</div>
+
+<% }
+%>
+
+</center>
+    <div class="form-horizontal col-sm-3 col-md-3 col-lg-3" ></div>
+    <div class="form-horizontal col-sm-6 col-md-6 col-lg-6" >
+        <h3 class="page-header" style="color:#707070">Create Community</h3>
+        
+        <form action='/community/createcommunity' method="POST" enctype="multipart/form-data" id="createCommunity">
+        
+            <div class="form-group d-flex">
+              <div class="image-container">
+                        <img src="/Upload/images/defaultCommunity.jpg" id="community-profile-image" style="width: 150px; height: 150px" class="img-thumbnail allSidesSoft" />
+                        <div class="middle">
+                            <input type="button" class="btn btn-default btn-sm" id="changeCommunityPicBtn" value="Change" />
+                            <input type="file" style="display: none;" id="profileUpload" name="profilePhoto" />
+                        </div>
+   
+                </div>
+             </div>
+             
+            <div class="form-group">
+                <input class="form-control" type="text" required="" name="communityName" placeholder="Name" maxlength="70" required pattern=".*\S+.*" title="This field can't be empty">
+            </div>
+            <div class="form-group">
+                    <label style="color:#707070">Description</label>
+                    <textarea class="form-control" rows='10' id='description' name="communityDescription" style="overflow:hidden" required></textarea>
+            </div>
+            <div class="form-group ">
+                <label style="color:#707070">Rule :</label>
+                <input class="radio radio-inline"  type="radio" checked value="Direct" name="communityMembershipRule"> Direct
+                <input class="radio radio-inline" type="radio" value="Permission"  name="communityMembershipRule"> Permission
+            </div>
+
+            <div class="form-group" style="display:none">
+              <div class="col-xs-1 col-sm-1">
+                  <input type="checkbox" class="checkbox-custom" style="outline: none;" id="check" onchange="appendData()" />
+              </div>
+              <div class="col-xs-8 col-sm-9" style="font-weight:bold;margin-top:5px;color:#707070">
+                  Local Community
+              </div>
+            </div>
+
+            <div class="form-group" id="dynamic">
+
+            </div>
+            <div class="form-group">
+                    <input class="form-control btn btn-primary" type="submit" value="Create Community" >
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div> <!--Header-->
+<script src="/javascripts/Common.js"></script>
+
+<script>
+var selector = '.nav li';
+$(selector).removeClass('active');
+$('#add-community-nav').addClass('active');
+</script>
+
+<script src="/Plugins/js/trumbowyg.min.js"></script>
+<script type="text/javascript">
+      function appendData(){
+          if($('#check').is(':checked'))
+              $('#dynamic').append('<input type="text" class="form-control" name="communityLocation" placeholder="Location" equired />');
+          else
+          {
+              $('#dynamic').empty();
+          }
+  }
+</script>
+<script>
+
+
+$.trumbowyg.svgPath = '/Plugins/maileditor/icons.svg';
+$('#description').trumbowyg({
+  btnsDef: {
+        alert: {
+            fn: function() {
+                alert('some text')
+            },
+            ico: 'blockquote'
+        }
+    },
+
+  autogrow: true,
+  btns: [
+   ['undo', 'redo'],
+   ['formatting'],
+   ['strong', 'em', 'del'],
+   ['superscript', 'subscript'],
+   ['horizontalRule'],
+   ['unorderedList', 'orderedList'],
+   ['link'],
+   ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+   ['fullscreen']
+]
+});
+
+
+$(document).ready(function(){
+
+$('#changeCommunityPicBtn').on('click',function(){
+$('#profileUpload').trigger('click');
+});
+
+$('#profileUpload').on('change',function(){
+if(validImage(this))
+{
+readURL(this);
+
+}
+
+});
+
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#community-profile-image').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+    var form=document.getElementById('createCommunity');
+    
+    form.onsubmit=function(e)
+    { 
+        e.preventDefault();
+
+        if(document.getElementById('profileUpload').value=="")
+            {
+                $.confirm({
+                draggable:false,
+                title: 'Default Image Upload',
+                content: 'Latest Image uploaded was invalid.Default image will be uploaded.Do you want to upload valid image?',
+                buttons: {
+                    yes:{
+                    text: 'YES',
+                    btnClass: 'btn-green'
+
+                    },
+                    no:{
+                    text: 'NO',
+                    btnClass: 'btn-red',
+                    action: function(){
+                        form.submit();
+                        }
+                      }
+
+                    }
+                });
+
+            }
+            else
+            {
+            form.submit();
+            }
+
+    }
+
+
+
+});
+
+
+
+  </script>
+    </div>
+</div>
+
+    </body>
+</html>

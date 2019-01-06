@@ -1,0 +1,95 @@
+  
+  <div class="community-header-top communityheader-profile-mobile" style="padding-top:6px;position:relative;">
+    <div class="container pc">
+
+    <!-- There are total 6 states.do this and other button with jquery add this button only on community profile page with jquery. remove code from here.states of button requested,ask to join,direct join -->
+            <button class="btn btn-info community-panel-btn requestBtn joinBtn" data-id=0 style="float:right">Ask To Join <i class="fa fa-ask"></i></button>
+          
+    
+</div>
+    <center>
+        <div class="communityprofile-name-mobile" style="max-height:40px;overflow:scroll">
+          <a href="/community/communityprofile/<%=community._id%>" style="color:white">
+             <%=community.name%>
+          </a>
+        </div>
+    </center>
+
+    <center>
+      <a href="/community/communityprofile/<%=community._id%>">
+        <img src="<%=community.image%>" class="mobile img-communityprofile-pic allSides" style="background:#fff" />
+      </a>
+    </center>
+
+</div>
+
+<div class="container community-profile-conatiner">
+<div class="col-sm-2 col-xs-12 center-mobile pc">
+<a href="/community/communityprofile/<%=community._id%>">
+  <img src="<%=community.image%>" class="img-communityprofile-pic allSides" style="background:#fff" />
+</a>
+</div>
+
+<div class="col-sm-8 communityprofile-name-pc">
+  <a href="/community/communityprofile/<%=community._id%>" class="communityprofile-name-pc">
+   <%=community.name%>
+  </a>
+</div>
+
+<%
+if(type=='Member' ||type=='Admin' ||type=='Owner')
+{ %>
+
+<div class="col-sm-2 col-xs-12 center-mobile" style="padding-top:10px;float:right">
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle commuity-profile-menu-btn" type="button" data-toggle="dropdown">
+    <i class="fa fa-bars"></i>
+  </button>
+  <ul class="dropdown-menu custom-commuity-dropdown dropdown-menu-right" style="margin-top:40px">
+
+    
+      <li>
+          <a href="/community/discussion/<%=community._id%>" class="community-profile-option-btn">
+            Discussions
+          </a>
+      </li>
+    
+
+    <%
+    if(type=='Admin' ||type=='Owner')
+    { %>
+    
+      <li>
+          <a href="/community/managecommunity/<%=community._id%>" class="community-profile-option-btn">
+            Manage Community
+          </a>
+      </li>
+    <%
+    }
+    %>
+
+      <li>
+          <a href="/community/communityprofile/<%=community._id%>" class="community-profile-option-btn">
+            Community Profile
+          </a>
+      </li>
+
+      <li>
+          <a href="/community/communitymembers/<%=community._id%>" class="community-profile-option-btn">
+            Community Members
+          </a>
+      </li>
+
+    </ul>
+</div>
+</div>
+
+<%
+}
+%>
+
+
+</div>
+<center>
+    <hr style="border-top:2px solid #E6E6E6;width:85%;margin-top:0">
+</center>

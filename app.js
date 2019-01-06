@@ -1,3 +1,5 @@
+//make queries to fetch only that fields which will be needed.
+
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -18,6 +20,7 @@ app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 8000);
 const port = app.get('port');
 const imagePath = "/Upload/images";
+const defaultImageCommunity = "/Upload/images/defaultCommunity.jpg";
 
 app.use(session({
     secret: 'Goku is the strongest',
@@ -116,6 +119,7 @@ app.post('/', redirectHome, function (req, res) {
             }
 
             req.session.header = {
+                _id: result._id,
                 email: result.email,
                 name: result.name,
                 role: result.role,
@@ -141,8 +145,8 @@ app.post('/', redirectHome, function (req, res) {
 
 app.get('/profile', authenticate, function (req, res) {
 
-    var email = req.session.header.email;
-    User.findOne({ email: email }, function (err, result) {
+    var _id = req.session.header._id;
+    User.findOne({ _id: _id }, function (err, result) {
         if (err) throw err;
         if (result) {
 
@@ -161,8 +165,8 @@ app.get('/profile', authenticate, function (req, res) {
 
 app.get('/editProfile', authenticate, function (req, res) {
 
-    var email = req.session.header.email;
-    User.findOne({ email: email }, function (err, result) {
+    var _id = req.session.header._id;
+    User.findOne({ _id: _id }, function (err, result) {
         if (err) throw err;
         if (result) {
 
@@ -193,7 +197,7 @@ app.post('/editProfile', authenticate, function (req, res) {
         console.log('Success in profile editing');
 
 
-        var email = req.session.header.email;
+        var _id = req.session.header._id;
         var image;
         if (req.file == undefined) {
             image = req.session.header.image;
@@ -208,7 +212,7 @@ app.post('/editProfile', authenticate, function (req, res) {
         var dob = new Date(dob_array[2], dob_array[1] - 1, dob_array[0]);
 
         var gender = req.body.gender;
-        var phone = parseInt(req.body.phone);
+        var phone = (req.body.phone).trim();
         var city = (req.body.city).trim();
         var interests = req.body.interests;
         if (interests == null) {
@@ -217,7 +221,7 @@ app.post('/editProfile', authenticate, function (req, res) {
         var journey = (req.body.journey).trim();
         var expectation = (req.body.expectation).trim();
 
-        User.findOneAndUpdate({ email: email },
+        User.findOneAndUpdate({ _id: _id },
             {
                 image: image, name: name, dob: dob, gender: gender, phone: phone, city: city, interests: interests, journey: journey, expectation: expectation, status: true
             },
@@ -257,7 +261,7 @@ app.get('/admin/adduser', authenticate, function (req, res) {
 app.post('/admin/adduser', authenticate, function (req, res) {
 
     var email = req.body.username;
-    var phone = parseInt(req.body.phone);
+    var phone = (req.body.phone).trim();
     var city = (req.body.city).trim();
     var password = req.body.password;
     var role = req.body.roleoptions;
@@ -428,44 +432,7 @@ app.post('/admin/updateuser', authenticate, function (req, res) {
     var id = req.body.id;
     var email = req.body.email;
     var oldemail = req.body.oldemail;
-    var phone = parseInt(req.body.phone);
-    var city = (req.body.city).trim();
-    var status = req.body.status;
-    var role = req.body.role;
-
-    User.findOneAndUpdate({ _id: id }, { email: email, phone: phone, city: city, status: status, role: role }, function (err, result) {
-        if (err) throw err;
-        if (result) {
-            if (oldemail == req.session.header.email) {
-                req.session.header.email = email;
-                req.session.header.role = role;
-                if (role != 'Admin') {
-                    req.session.header.state = 'User';
-                }
-
-                return res.json({ myupdate: true, success: "User Update Success" });
-            }
-            else {
-                return res.json({ success: "User Update Success" });
-            }
-
-        }
-        else {
-            return res.status(500).send({ error: 'Unable to update' });;
-        }
-
-    });
-
-
-
-});
-
-app.post('/admin/updateuser', authenticate, function (req, res) {
-
-    var id = req.body.id;
-    var email = req.body.email;
-    var oldemail = req.body.oldemail;
-    var phone = parseInt(req.body.phone);
+    var phone = (req.body.phone).trim();
     var city = (req.body.city).trim();
     var status = req.body.status;
     var role = req.body.role;
@@ -584,12 +551,183 @@ app.get('/noPermission', authenticate, function (req, res) {
     return res.render('no_permission');
 });
 
+
+app.get('/communityError', authenticate, function (req, res) {
+    res.status(404);
+    return res.render('community_error');
+});
+
+
+app.get('/community/createcommunity', function (req, res) {
+
+    if (req.session.add == undefined) {
+        return res.render('create_community', { header: req.session.header, add: false });
+    }
+    else {
+        delete req.session.add;
+
+        return res.render('create_community', { header: req.session.header, add: true });
+
+    }
+
+
+});
+
+
+app.post('/community/createcommunity', authenticate, function (req, res) {
+
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+            req.flash('error', err.message);
+            return res.redirect('/logout');
+
+        }
+
+        //  console.log('Success in creating community');
+
+
+        var image;
+        if (req.file == undefined) {
+            image = defaultImageCommunity;
+        }
+        else {
+            image = imagePath + '/' + req.file.filename;
+        }
+
+        var name = (req.body.communityName).trim();
+        var description = req.body.communityDescription;
+        var rule = req.body.communityMembershipRule;
+        var owner = req.session.header._id;
+        var newCommunity = new Community({
+            _id: new mongoose.Types.ObjectId(),
+            name: name,
+            description: description,
+            owner: owner,
+            rule: rule,
+            status: 'Activated',
+            image: image,
+            dateCreated: new Date(),
+            location: 'Not Added',
+
+        });
+
+        newCommunity.save(function (err) {
+            if (err) throw err;
+            console.log('Community created');
+            User.updateOne({ _id: owner },
+                { $push: { ownerCommunity: newCommunity._id } }, function (err) {
+                    if (err) throw err;
+
+                    console.log('Made Community owner');
+                });
+
+        });
+
+        req.session.add = true;
+        return res.redirect('/community/createCommunity');
+
+    });
+
+});
+
+app.get('/community/editcommunity/:_id', authenticate, function (req, res) {
+    //http://localhost:8000/community/editcommunity/5c32406d5351a106b83a4b94
+    var _id = req.params._id;
+    Community.findOne({ _id: _id }, function (err, result) {
+        if (err) throw err;
+        if (result && result.status == 'Activated') {
+
+            if (result.requests.length > 0) {
+                return res.render('edit_community', { header: req.session.header, community: result, type: 'Owner', requests: true });
+            }
+            else {
+                return res.render('edit_community', { header: req.session.header, community: result, type: 'Owner', requests: false });
+
+            }
+
+        }
+        else {
+            return redirect('/communityError');
+        }
+
+    });
+
+
+});
+
+app.post('/community/editcommunity/:_id', authenticate, function (req, res) {
+
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+            req.flash('error', err.message);
+            return res.redirect('/logout');
+
+        }
+
+        //console.log('Success in creating community');
+
+        var image;
+        if (req.file == undefined) {
+            image = defaultImageCommunity;
+        }
+        else {
+            image = imagePath + '/' + req.file.filename;
+        }
+
+        var _id = req.params._id;
+        var name = (req.body.communityName).trim();
+        var description = req.body.communityDescription;
+
+        var details = {
+            _id: _id,
+            name: name,
+            description: description,
+            image: image,
+        }
+
+        if (req.body.communityMembershipRule) {
+            details.rule = req.body.communityMembershipRule;
+        }
+
+
+        Community.updateOne({ _id: _id }, details, function (err) {
+            if (err) throw err;
+            console.log('Community Updated');
+
+        });
+
+        return res.redirect('/community/communityprofile/' + _id);
+
+    });
+
+});
+
+
+app.get('/testing', function (req, res) {
+
+    if (req.session.add == undefined) {
+        return res.render('create_community', { header: req.session.header, add: false });
+    }
+    else {
+        delete req.session.add;
+
+        return res.render('create_community', { header: req.session.header, add: true });
+
+    }
+
+
+});
+
+
 app.get('*', function (req, res) {
 
     res.status(404);
     return res.render('not_found');
 
 });
+
 app.post('*', function (req, res) {
 
     res.status(404);
@@ -598,7 +736,7 @@ app.post('*', function (req, res) {
 
 app.listen(port, function () {
 
-    console.log('Server is up and running on port numner ' + port);
+    console.log('Server is up and running on port number ' + port);
 
 });
 
