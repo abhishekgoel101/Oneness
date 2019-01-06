@@ -1,3 +1,0 @@
-http://159.65.152.42:3000/javascripts/helper/validation.js
-
-http://159.65.152.42:3000/javascripts/Common.js

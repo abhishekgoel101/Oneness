@@ -66,6 +66,12 @@ table.dataTable thead th.sorting_desc:after {
 {
   display: none
 }
+
+.tableActivated{
+  display:none;
+}
+
+
 #usertable{
   display:none;
 }

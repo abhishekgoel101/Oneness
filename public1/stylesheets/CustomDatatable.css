@@ -62,6 +62,8 @@
   {
     display: none
   }
+
+
   .ComTableId
   {
     display: none;
@@ -80,6 +82,10 @@
   .tagsTableId{
     display:none;
   }
+  .tableActivated{
+    display:none;
+  }
+
   .tagsTableName{
     text-align:center;
   }
@@ -123,8 +129,9 @@
     }
     td.tableAction
     {
-      padding:0 20px 0 20px !important;
+      padding:0 0px 0 0px !important;
     }
+
     td.ComTableImage{
       padding:0 30px 0 30px !important;
     }

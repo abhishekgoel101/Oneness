@@ -29,30 +29,33 @@
         </div>
         <div class="modal-body">
         <!------------------------------------------------------------------------------------>
+        <form method='POST'  id='emailSend'>
         <div class="form-horizontal"> <!-- form -->
           <div class="form-group">
             <label class="control-label col-sm-2" for="email">To:</label>
             <div class="col-sm-10">
-              <input type="email" name="username" class="form-control" id="emailPop" readonly>
+              <input type="email" name="username" class="form-control" id="emailPop" required readonly>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2">Subject:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Title">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Title" required>
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-12"><!--Body-->
-              <textarea type="text" class="form-control" name="body" id="body"></textarea>
+              <textarea type="text" class="form-control" name="body" id="body" required></textarea>
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button class="btn btn-default" id="mailbutton" style="float:right">Send</button>
+              <button type="submit" form="emailSend" class="btn btn-default" id="mailbutton" style="float:right">Send</button>
             </div>
           </div>
-        </div> <!-- form -->
+        </div> 
+        </form>
+        <!-- form -->
         <!---------------------------------------------------------------------------------->
         </div>
       </div>
@@ -62,7 +65,7 @@
 
 
 
-<div class="modal fade" id="updateUser" role="dialog" style="z-index:9999">
+ <div class="modal fade" id="updateUser" role="dialog" style="z-index:9999">
     <div class="modal-dialog">
 
       <div class="modal-content">
@@ -72,6 +75,7 @@
         </div>
         <div class="modal-body">
         <!------------------------------------------------------------------------------------>
+        <form method='POST' id='updateDetails'>
   <div class="form-horizontal">
           <div class="form-group">
             <div class="col-lg-5 col-lg-offset-3" style="width:50%">
@@ -81,27 +85,27 @@
           <div class="form-group">
             <label class="control-label col-sm-2">Username:</label>
             <div class="col-sm-10">
-              <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+              <input type="email" name="username" class="form-control" id="username" placeholder="Username" required>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2">Phone:</label>
             <div class="col-sm-10">
-              <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone" maxlength="15">
+              <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone" maxlength="10" required>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2">City:</label>
             <div class="col-sm-10">
-              <input type="text" name="city" class="form-control" id="city" placeholder="City">
+              <input type="text" name="city" class="form-control" id="city" placeholder="City" required pattern=".*\S+.*" title="This field can't be empty">
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2">Status:</label>
             <div class="col-sm-10">
               <select class="form-control" id="status" name="status">
-                  <option name="pending" value="pending">Pending</option>
-                  <option name="confirmed" value="confirmed">Confirmed</option>
+                  <option name="pending" value="false">Pending</option>
+                  <option name="confirmed" value="true">Confirmed</option>
               </select>
             </div>
           </div>
@@ -109,18 +113,19 @@
             <label class="control-label col-sm-2">Role:</label>
             <div class="col-sm-10">
               <select class="form-control" id="role" name="role">
-                <option name="user" value="user">User</option>
-                  <option name="admin" value="commuity manager">Commuity Manager</option>
-                <option name="admin" value="admin">Admin</option>
+                <option name="user" value="User">User</option>
+                  <option name="admin" value="Commuity Manager">Commuity Manager</option>
+                <option name="admin" value="Admin">Admin</option>
               </select>
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button class="btn btn-default" id="editsubmit">Update</button>
+              <button type="submit" form="updateDetails" class="btn btn-default" id="editsubmit">Update</button>
             </div>
           </div>
         </div>
+        </form>
         <!---------------------------------------------------------------------------------->
         </div>
         <div class="modal-footer">
@@ -129,7 +134,7 @@
       </div>
     </div>
   </div>
-
+ 
 
       <center><p id="msgalert"></p></center>
 
@@ -146,8 +151,8 @@
 
       <select class="form-control filter-button" id="statusFilter" name="statusFilter" style="float: right;margin-left: 10px;">
       <option name="user" value="">All</option>
-          <option name="pending" value="pending">Pending</option>
-      <option name="confirmed" value="confirmed">Confirmed</option>
+          <option name="pending" value="false">Pending</option>
+      <option name="confirmed" value="true">Confirmed</option>
       </select>
 
       <button onclick="refresh()" class="btn btn-default" style="float: right;background-color: #2D312C;color: #fff">
@@ -158,9 +163,10 @@
       <br>
       <br>
       <div class="table-wrapper">
-        <table class="table table-striped table-bordered nowrap" id="usertable" width="100%">
+        <table class="table table-striped table-bordered nowrap" id="usertable" width="100%">    
         </table>
       </div>
+      
 </div>
 </div> <!--Header-->
 </div>
@@ -170,7 +176,7 @@
 <script src="/Plugins/js/notie.min.js"></script>
 <script src="/Plugins/js/trumbowyg.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
-<script src="/javascripts/pagination-login.js"></script>
+<script src="/javascripts/userlist.js"></script>
 <script src="/javascripts/Common.js"></script>
 
 <script>
@@ -179,10 +185,11 @@ $(selector).removeClass('active');
 $('#user-list-nav').addClass('active');
 </script>
 
-<script>
-  $.trumbowyg.svgPath = '/Plugins/maileditor/icons.svg';
-  $('#body').trumbowyg(
-    );
+ <script>
+   $.trumbowyg.svgPath = '/Plugins/maileditor/icons.svg';
+   $('#body').trumbowyg();
 </script>
+
+
 </body>
 </html>

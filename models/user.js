@@ -76,17 +76,9 @@ var userSchema = new Schema({
 
     /*
     
-    tags:[
-        {type:String}
-    ],//it may be same as interests
-
     //link with communities also
     //array of communities created,member,requested,
 
-    created:{
-        type:Date,
-        default:Date.now
-    },
     */
 
 

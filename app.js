@@ -5,6 +5,7 @@ var multer = require('multer');
 var path = require('path');
 var nodemailer = require('nodemailer');
 var sendmail = require('./public/sendmail');
+var newUserMail = require('./public/newUserMail');
 
 var mongoose = require('mongoose');
 require('./models/connection');
@@ -22,7 +23,7 @@ app.use(session({
     secret: 'Goku is the strongest',
     resave: true,
     saveUninitialized: true,
-    // rolling:true,
+    rolling: true,
     cookie: { maxAge: 300000 }
 }));
 
@@ -278,11 +279,21 @@ app.post('/admin/adduser', authenticate, function (req, res) {
     newUser.save(function (err) {
         if (err) throw err;
         console.log('User created');
-        sendmail(newUser.email, newUser.password);
+        var to = newUser.email;
+        var subject = 'Oneness - User Account Credentials';
+        var body = newUserMail(to, newUser.password);
+        sendmail(to, subject, body);
     });
 
     req.session.add = true;
     return res.redirect('/admin/adduser');
+
+});
+
+app.post('/admin/sendmail', authenticate, function (req, res) {
+
+    sendmail(req.body.to, req.body.subject, req.body.body);
+    return res.json({ success: true });
 
 });
 
@@ -318,6 +329,200 @@ app.get('/admin/userlist', authenticate, function (req, res) {
 
 });
 
+app.post('/admin/userlist', authenticate, function (req, res) {
+    //console.log(req.body);
+
+    var role = req.body.roleFilter;
+    var status = req.body.statusFilter;
+    var start = parseInt(req.body.start);
+    var length = parseInt(req.body.length);
+    var order = req.body.order[0];
+    var orderby = {};
+    var dir;
+
+    var searchStr = req.body.search.value;
+    if (req.body.search.value) {
+        var regex = new RegExp(req.body.search.value, "i")
+        searchStr = { $or: [{ 'email': regex }, { 'city': regex }] };
+    }
+    else {
+        searchStr = {};
+    }
+    var subquery = {};
+
+    if (role != '') {
+        subquery.role = role;
+    }
+
+    if (status == "true") {
+        subquery.status = true;
+    }
+    else if (status == "false") {
+        subquery.status = false;
+    }
+
+    var query = {
+        $and: [subquery, searchStr]
+    };
+
+    if (order.dir == 'asc') {
+        dir = 1;
+    }
+    else {
+        dir = -1;
+    }
+
+
+    if (order.column == '1') {
+        orderby.email = dir;
+    }
+    else if (order.column == '3') {
+        orderby.city = dir;
+    }
+    else if (order.column == '4') {
+        orderby.status = dir;
+    }
+    else if (order.column == '5') {
+        orderby.role = dir;
+    }
+    else {
+        orderby.activated = dir;
+    }
+    //console.log(orderby);
+
+    var recordsTotal = 0;
+    var recordsFiltered = 0;
+    User.count({}, function (err, c) {
+        recordsTotal = c;
+        // console.log(c);
+
+        User.count(query, function (err, c) {
+            recordsFiltered = c;
+            //   console.log(c);
+            // console.log(req.body.start);
+            // console.log(req.body.length);
+            User.find(query, 'email phone city status role activated', { skip: start, limit: length, sort: orderby }, function (err, result) {
+                if (err) {
+                    // console.log('error while getting results' + err);
+                    //return;
+                    throw err;
+                }
+
+                var data = JSON.stringify({
+                    draw: req.body.draw,
+                    recordsFiltered: recordsFiltered,
+                    recordsTotal: recordsTotal,
+                    data: result
+                });
+                res.send(data);
+            });
+
+        });
+    });
+
+
+});
+
+app.post('/admin/updateuser', authenticate, function (req, res) {
+
+    var id = req.body.id;
+    var email = req.body.email;
+    var oldemail = req.body.oldemail;
+    var phone = parseInt(req.body.phone);
+    var city = (req.body.city).trim();
+    var status = req.body.status;
+    var role = req.body.role;
+
+    User.findOneAndUpdate({ _id: id }, { email: email, phone: phone, city: city, status: status, role: role }, function (err, result) {
+        if (err) throw err;
+        if (result) {
+            if (oldemail == req.session.header.email) {
+                req.session.header.email = email;
+                req.session.header.role = role;
+                if (role != 'Admin') {
+                    req.session.header.state = 'User';
+                }
+
+                return res.json({ myupdate: true, success: "User Update Success" });
+            }
+            else {
+                return res.json({ success: "User Update Success" });
+            }
+
+        }
+        else {
+            return res.status(500).send({ error: 'Unable to update' });;
+        }
+
+    });
+
+
+
+});
+
+app.post('/admin/updateuser', authenticate, function (req, res) {
+
+    var id = req.body.id;
+    var email = req.body.email;
+    var oldemail = req.body.oldemail;
+    var phone = parseInt(req.body.phone);
+    var city = (req.body.city).trim();
+    var status = req.body.status;
+    var role = req.body.role;
+
+    User.findOneAndUpdate({ _id: id }, { email: email, phone: phone, city: city, status: status, role: role }, function (err, result) {
+        if (err) throw err;
+        if (result) {
+            if (oldemail == req.session.header.email) {
+                req.session.header.email = email;
+                req.session.header.role = role;
+                if (role != 'Admin') {
+                    req.session.header.state = 'User';
+                }
+
+                return res.json({ myupdate: true, success: "User Update Success" });
+            }
+            else {
+                return res.json({ success: "User Update Success" });
+            }
+
+        }
+        else {
+            return res.status(500).send({ error: 'Unable to update' });;
+        }
+
+    });
+
+
+
+});
+
+app.post('/admin/activation', authenticate, function (req, res) {
+
+    var id = req.body.id;
+    var email = req.body.email;
+    var activated = req.body.activated;
+
+    User.findOneAndUpdate({ _id: id }, { activated: activated }, function (err, result) {
+        if (err) throw err;
+        if (result) {
+            if (email == req.session.header.email) {
+                req.session.header.activated = activated;
+                return res.json({ mydeactivate: true, success: "User Activation status updated" });
+            }
+            else {
+                return res.json({ success: "User Activation status updated" });
+            }
+
+        }
+        else {
+            return res.status(500).send({ error: 'Unable to update Activation status' });;
+        }
+
+    });
+
+
+});
 
 app.get('/changePassword', authenticate, function (req, res) {
 
