@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<% include partials/header %>
+
+<body>
+
+<div id="wrapper">
+<% include partials/sidebar %>
+
+<div id="page-content-wrapper" style="padding:0;margin-top:60px"> <!--Margin Top is new-->
+         <div class="container-fluid page-content-div" style="padding:0">
+            <div class="row">
+               <div class="col-lg-12 scoll-possible" style="padding:0">
+
+
+
+<!--====================================================================-->
+<div class="community-header-top" style="height:50px;padding-top:6px;">
+<div class="col-sm-12 community-sub-head">
+    <a class="btn community-head-btn active" href="/community/communitypanel">
+      <i class="fa fa-users"></i>
+    </a>
+    <a class="btn community-head-btn" style="margin-left:10px" href="/community/list">
+      <i class="fa fa-search"></i>
+    </a>
+</div>
+</div>
+<!--====================================================================-->
+<div class="container" style="padding:0">
+<div class="col-sm-12">
+  <div class="panel panel-default allSidesSoft community-panel-main-div">
+    <div class="panel-heading community-panel-heading">
+      
+        <p style="color:white;margin-top:6px;font-weight:bold">My Communities</p>
+      <%  if(header.role!='User')
+       {
+       %> 
+        <a href='/community/createcommunity' class="btn btn-info community-panel-btn" style="float:right;margin:-35px 5px 0 0">Create</a>
+      <%
+      }
+      %>
+
+    </div>
+
+<% if(user.ownerCommunity.length==0 && user.myCommunity.length==0 && user.requestedCommunity.length==0 && user.invitesCommunity.length==0)
+{
+%>
+
+<div class="panel-body" style="padding-bottom:0">
+      
+        <div id="noCommunity">
+          <!--No Community-->
+
+            <div class='col-sm-12 noCommunity well' style='margin-top:5px;font-weight:bold'>
+                <center>No Community Joined,Requested,Invited.</center><br /><center>
+                <a class='btn btn-default' href='/community/list'>Click here for more communities</a></center>
+                 </div>
+
+        </div>
+      
+    </div>
+
+
+
+
+<%
+} else
+{ 
+%>
+
+<div class="panel-body" style="padding-bottom:0">
+      
+        <div id="ownerCommunity">
+          <!--Owner of Community-->
+    <% for(var i=0;i<user.ownerCommunity.length;i++)
+    { %>
+        <div class="col-sm-12 col-xs-12 ownerCommunity community-div" style="margin-top:5px;" ><div class="col-sm-1 col-xs-3" style="padding:10px;z-index:1"><a href="/community/discussion/<%=user.ownerCommunity[i]._id%>"><img src="<%=user.ownerCommunity[i].image%>" class="cpic"></a></div><div class="col-sm-10 col-xs-7" style="padding-top:25px;padding-bottom:5px;overflow:scroll">     <p style="margin:0"><a class="comnametxt" href="/community/discussion/<%=user.ownerCommunity[i]._id%>"><%=user.ownerCommunity[i].name%></a>&nbsp;&nbsp;&nbsp;<a class="comnametxt-user" href="/community/managecommunity/<%=user.ownerCommunity[i]._id%>">Request(<%=user.ownerCommunity[i].requests.length%>)</a></p></div><div class="col-sm-1 col-xs-2" style="padding:0"><a class="community-short-btn" href="/community/managecommunity/<%=user.ownerCommunity[i]._id%>" style="float:rignt"><label class="label label-success" style="cursor:pointer !important;"><i class="fa fa-cogs"></i></label></a></div></div>
+        
+    <%
+    }
+    %>
+        </div>
+      
+    </div>
+
+
+
+<div class="panel-body" style="padding-top:0;padding-bottom:0">
+ 
+        <div id="myCommunity">    
+          <!--My Community-->
+
+    <% for(var i=0;i<user.myCommunity.length;i++)
+    { %>    
+        <div class="col-sm-12 col-xs-12 myCommunity community-div" style="margin-top:5px;"><div class="col-sm-1 col-xs-3" style="padding:10px;z-index:1"><a href="/community/discussion/<%=user.myCommunity[i]._id%>"><img src="<%=user.myCommunity[i].image%>" class="cpic"></a></div><div class="col-sm-10 col-xs-7" style="padding-top:25px;padding-bottom:5px;overflow:scroll">     <p style="margin:0"><a class="comnametxt" href="/community/discussion/<%=user.myCommunity[i]._id%>"><%=user.myCommunity[i].name%></a>&nbsp;&nbsp;&nbsp;<a class="comnametxt-user" href="/community/communitymembers/<%=user.myCommunity[i]._id%>">Members(<%=(1+user.myCommunity[i].admins.length+user.myCommunity[i].members.length)%>)</a></p></div><div class="col-sm-1 col-xs-2" style="padding:0"></div>
+        </div>
+        <%
+        }
+        %>
+        
+        </div>
+    </div>
+
+
+
+<div class="panel-body" style="padding-top:0;padding-bottom:0">
+      <div id="requestedCommunity">
+        <!--Requested Community-->
+
+    <% for(var i=0;i<user.requestedCommunity.length;i++)
+    { %>            
+      <div class="col-sm-12 col-xs-12 requestedCommunity community-div" style="margin-top:5px;" ><div class="col-sm-1 col-xs-3" style="padding:10px;z-index:1"><a href="/community/communityprofile/<%=user.requestedCommunity[i]._id%>"><img src="<%=user.requestedCommunity[i].image%>" class="cpic"></a></div><div class="col-sm-10 col-xs-7" style="padding-top:25px;padding-bottom:5px;overflow:scroll">     <p style="margin:0"><a class="comnametxt" href="/community/communityprofile/<%=user.requestedCommunity[i]._id%>"><%=user.requestedCommunity[i].name%></a>&nbsp;&nbsp;&nbsp;<a class="comnametxt-user" style="text-decoration:none;color:black;cursor:context-menu">Members(<%=(1+user.requestedCommunity[i].admins.length+user.requestedCommunity[i].members.length)%>)</a>&nbsp;&nbsp;&nbsp;<label class="label label-danger">Requested</label></p></div><div class="col-sm-1 col-xs-2" style="padding:0"><a class="community-short-btn" onclick="cancelRequest(this,'<%=user._id%>','<%=user.requestedCommunity[i]._id%>')" style="float:right"><label class="label label-danger" style="cursor:pointer !important;"><i class="fa fa-times"></i></label></a></div>
+      
+      </div>
+      
+    <% 
+    } 
+    %>
+      
+      </div>
+    </div>
+
+
+
+
+
+<div class="panel-body" style="padding-top:0">
+      <div id="invitesCommunity">
+        <!--Invitation Community-->
+
+    <% for(var i=0;i<user.invitesCommunity.length;i++)
+    { %> 
+      <div class="col-sm-12 col-xs-12 invitesCommunity community-div" style="margin-top:5px;" ><div class="col-sm-1 col-xs-3" style="padding:10px;z-index:1"><a href="/community/communityprofile/<%=user.invitesCommunity[i]._id%>"><img src="<%=user.invitesCommunity[i].image%>" class="cpic"></a></div><div class="col-sm-10 col-xs-7" style="padding-top:25px;padding-bottom:5px;overflow:scroll">     <p style="margin:0"><a class="comnametxt" href="/community/communityprofile/<%=user.invitesCommunity[i]._id%>"><%=user.invitesCommunity[i].name%></a>&nbsp;&nbsp;&nbsp;<a class="comnametxt-user" style="text-decoration:none;color:black;cursor:context-menu">Members(<%=(1+user.invitesCommunity[i].admins.length+user.invitesCommunity[i].members.length)%>)</a>&nbsp;&nbsp;&nbsp;<label class="label label-info">Invitaion</label></p></div><div class="col-sm-1 col-xs-2" style="padding:0"><a class="community-short-btn" onclick="cancelInvite(this,'<%=user._id%>','<%=user.invitesCommunity[i]._id%>')" style="float:right"><label class="label label-danger" style="cursor:pointer !important;"><i class="fa fa-times"></i></label></a>&nbsp;&nbsp;&nbsp;<a class="community-short-btn" onclick="acceptInvite(this,'<%=user._id%>','<%=user.invitesCommunity[i]._id%>')" style="float:right"><label class="label label-success" style="cursor:pointer !important;"><i class="fa fa-check"></i></label></a></div>
+      
+      </div>
+      
+    <% 
+    } 
+    %> 
+
+      </div>
+    </div>
+
+
+
+<%
+}
+%>
+
+
+  </div>
+</div>
+</div>
+<br />
+<!--====================================================================-->
+
+</div>
+</div>
+</div>
+</div> <!--Header-->
+<script src="/javascripts/Common.js"></script>
+<script src="/Plugins/js/notie.min.js"></script>
+<script>
+var selector = '.nav li';
+$(selector).removeClass('active');
+$('#community-panel-nav').addClass('active');
+</script>
+
+<script>
+
+function cancelRequest(elem,user_id,community_id)
+{
+var parent=elem.closest('.requestedCommunity');
+
+    $.confirm({
+    draggable:false,
+    title: 'Cancel Request',
+    content: 'Do you really want to cancel the request...',
+    buttons: {
+        yes:{
+        text: 'YES',
+        btnClass: 'btn-green',
+        action: function(){
+        $(parent).fadeOut(1000);  
+            $.ajax({
+              type:'POST',
+              url:'/community/cancelrequest',
+              contentType : "application/json",
+              data:JSON.stringify({user_id:user_id,community_id:community_id}),
+              success:function(data){
+              $(parent).remove();
+
+              },
+                
+              error:function(jqxhr,err){
+                console.log(err); 
+                notie.alert({type: 3, text:'Something went wrong!', time: 2});
+                $(parent).fadeIn(0); 
+                
+                }
+
+              });
+            
+            }
+        },
+        no:{
+        text: 'NO',
+        btnClass: 'btn-red',
+
+          }
+
+        }
+    });
+
+
+  
+}
+
+function cancelInvite(elem,user_id,community_id)
+{
+var parent=elem.closest('.invitesCommunity');
+
+    $.confirm({
+    draggable:false,
+    title: 'Reject Invitaion',
+    content: 'Do you really want to reject the invite...',
+    buttons: {
+        yes:{
+        text: 'YES',
+        btnClass: 'btn-green',
+        action: function(){
+        $(parent).fadeOut(1000);  
+            $.ajax({
+              type:'POST',
+              url:'/community/cancelinvite',
+              contentType : "application/json",
+              data:JSON.stringify({user_id:user_id,community_id:community_id}),
+              success:function(data){
+              $(parent).remove();
+
+              },
+                  
+              error:function(jqxhr,err){
+                console.log(err); 
+                notie.alert({type: 3, text:'Something went wrong!', time: 2});
+                $(parent).fadeIn(0); 
+                
+                }
+
+              });
+            
+            }
+        },
+        no:{
+        text: 'NO',
+        btnClass: 'btn-red',
+
+          }
+
+        }
+    });
+
+
+  
+}
+
+function createmyCommunityElement(_id,name,image,count)
+{
+var community='<div class="col-sm-12 col-xs-12 myCommunity community-div" style="margin-top:5px;"><div class="col-sm-1 col-xs-3" style="padding:10px;z-index:1"><a href="/community/discussion/'+_id+'"><img src="'+image+'" class="cpic"></a></div><div class="col-sm-10 col-xs-7" style="padding-top:25px;padding-bottom:5px;overflow:scroll">     <p style="margin:0"><a class="comnametxt" href="/community/discussion/'+_id+'">'+name+'</a>&nbsp;&nbsp;&nbsp;<a class="comnametxt-user" href="/community/communitymembers/'+_id+'">Members('+count+')</a></p></div><div class="col-sm-1 col-xs-2" style="padding:0"></div></div>';
+
+//$('#myCommunity').append(community);
+
+$(community).hide().appendTo("#myCommunity").fadeIn(1000);
+
+}
+
+function acceptInvite(elem,user_id,community_id)
+{
+var parent=elem.closest('.invitesCommunity');
+
+    $.confirm({
+    draggable:false,
+    title: 'Accept Invitaion',
+    content: 'Do you really want to accept the invite...',
+    buttons: {
+        yes:{
+        text: 'YES',
+        btnClass: 'btn-green',
+        action: function(){
+        $(parent).fadeOut(1000);  
+            $.ajax({
+              type:'POST',
+              url:'/community/acceptinvite',
+              contentType : "application/json",
+              data:JSON.stringify({user_id:user_id,community_id:community_id}),
+              success:function(data){
+              $(parent).remove();
+              createmyCommunityElement(data._id,data.name,data.image,data.count);
+
+              },
+                  
+              error:function(jqxhr,err){
+                console.log(err); 
+                notie.alert({type: 3, text:'Something went wrong!', time: 2});
+                $(parent).fadeIn(0); 
+                
+                }
+
+              });
+            
+            }
+        },
+        no:{
+        text: 'NO',
+        btnClass: 'btn-red',
+
+          }
+
+        }
+    });
+
+
+  
+}
+
+
+</script>
+
+
+</body>
+</html>

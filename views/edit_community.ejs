@@ -35,6 +35,7 @@
                         <div class="middle">
                             <input type="button" class="btn btn-default btn-sm" id="changeCommunityPicBtn" value="Change" />
                             <input type="file" style="display: none;" id="profileUpload" name="profilePhoto" />
+                            <input type="text" style="display: none;" name="oldImage" value="<%=community.image%>" readonly/>
                         </div>
    
                 </div>
@@ -146,6 +147,11 @@ if(validImage(this))
 {
 readURL(this);
 
+}
+else
+{
+
+    $('#community-profile-image').attr('src',"<%=community.image%>");    
 }
 
 });

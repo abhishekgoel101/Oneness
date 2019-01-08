@@ -5,6 +5,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var path = require('path');
+var fs = require('fs');
 var nodemailer = require('nodemailer');
 var sendmail = require('./public/sendmail');
 var newUserMail = require('./public/newUserMail');
@@ -21,6 +22,7 @@ app.set('port', process.env.PORT || 8000);
 const port = app.get('port');
 const imagePath = "/Upload/images";
 const defaultImageCommunity = "/Upload/images/defaultCommunity.jpg";
+const defaultImageUser = "/Upload/images/default.png";
 
 app.use(session({
     secret: 'Goku is the strongest',
@@ -35,6 +37,7 @@ app.use(express.static(__dirname + '/public1'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 
 var authenticate = function (req, res, next) {
@@ -84,6 +87,7 @@ var storage = multer.diskStorage({
         callback(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
     }
 });
+
 var upload = multer({ storage: storage }).single('profilePhoto');
 
 
@@ -201,9 +205,19 @@ app.post('/editProfile', authenticate, function (req, res) {
         var image;
         if (req.file == undefined) {
             image = req.session.header.image;
+
         }
         else {
             image = imagePath + '/' + req.file.filename;
+            var oldImage = req.session.header.image;
+            if (oldImage != defaultImageUser) {
+                fs.unlink('./public' + oldImage, function (err) {
+                    if (err) return console.log(err);
+                    console.log('User Old Image deleted ' + oldImage);
+                });
+
+            }
+
         }
 
         var name = (req.body.name).trim();
@@ -228,8 +242,8 @@ app.post('/editProfile', authenticate, function (req, res) {
             function (err, result) {
                 if (err) throw err;
                 if (result) {
-                    req.session.header.name = result.name;
-                    req.session.header.image = result.image;
+                    req.session.header.name = name;
+                    req.session.header.image = image;
                     req.session.header.status = true;
 
                     return res.redirect('/profile');
@@ -277,7 +291,7 @@ app.post('/admin/adduser', authenticate, function (req, res) {
         gender: 'Male',
         phone: phone,
         city: city,
-        image: imagePath + '/default.png'
+        image: defaultImageUser,
     });
 
     newUser.save(function (err) {
@@ -405,7 +419,7 @@ app.post('/admin/userlist', authenticate, function (req, res) {
             //   console.log(c);
             // console.log(req.body.start);
             // console.log(req.body.length);
-            User.find(query, 'email phone city status role activated', { skip: start, limit: length, sort: orderby }, function (err, result) {
+            User.find(query, 'email phone city status role activated', { skip: start, limit: length, sort: orderby }).lean().exec(function (err, result) {
                 if (err) {
                     // console.log('error while getting results' + err);
                     //return;
@@ -558,7 +572,7 @@ app.get('/communityError', authenticate, function (req, res) {
 });
 
 
-app.get('/community/createcommunity', function (req, res) {
+app.get('/community/createcommunity', authenticate, function (req, res) {
 
     if (req.session.add == undefined) {
         return res.render('create_community', { header: req.session.header, add: false });
@@ -593,6 +607,7 @@ app.post('/community/createcommunity', authenticate, function (req, res) {
         }
         else {
             image = imagePath + '/' + req.file.filename;
+
         }
 
         var name = (req.body.communityName).trim();
@@ -632,7 +647,7 @@ app.post('/community/createcommunity', authenticate, function (req, res) {
 });
 
 app.get('/community/editcommunity/:_id', authenticate, function (req, res) {
-    //http://localhost:8000/community/editcommunity/5c32406d5351a106b83a4b94
+
     var _id = req.params._id;
     Community.findOne({ _id: _id }, function (err, result) {
         if (err) throw err;
@@ -669,11 +684,21 @@ app.post('/community/editcommunity/:_id', authenticate, function (req, res) {
         //console.log('Success in creating community');
 
         var image;
+        var oldImage = req.body.oldImage;
         if (req.file == undefined) {
-            image = defaultImageCommunity;
+            image = oldImage;
         }
         else {
             image = imagePath + '/' + req.file.filename;
+
+            if (oldImage != defaultImageCommunity) {
+                fs.unlink('./public' + oldImage, function (err) {
+                    if (err) return console.log(err);
+                    console.log('Community Old Image deleted ' + oldImage);
+                });
+
+            }
+
         }
 
         var _id = req.params._id;
@@ -705,17 +730,291 @@ app.post('/community/editcommunity/:_id', authenticate, function (req, res) {
 });
 
 
+app.post('/community/sendrequest', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    User.updateOne({ _id: user_id }, {
+        $push: { requestedCommunity: community_id }
+    }, function (err) {
+        if (err) throw err;
+
+        Community.updateOne({ _id: community_id }, {
+            $push: { requests: user_id }
+        }, function (err) {
+            if (err) throw err;
+            return res.end();
+
+        });
+
+
+    });
+
+});
+//2 way user can and admin can also cancel
+app.post('/community/cancelrequest', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    User.updateOne({ _id: user_id }, {
+        $pull: { requestedCommunity: community_id }
+    }, function (err) {
+        if (err) throw err;
+
+        Community.updateOne({ _id: community_id }, {
+            $pull: { requests: user_id }
+        }, function (err) {
+            if (err) throw err;
+            return res.end();
+
+        });
+
+
+    });
+
+});
+
+app.post('/community/acceptrequest', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    User.updateOne({ _id: user_id }, {
+        $pull: { requestedCommunity: community_id },
+        $push: { myCommunity: community_id }
+    }, function (err) {
+        if (err) throw err;
+
+        Community.updateOne({ _id: community_id }, {
+            $pull: { requests: user_id },
+            $push: { members: user_id }
+        }, function (err) {
+            if (err) throw err;
+            return res.end();
+
+        });
+
+
+    });
+
+});
+
+
+app.post('/community/sendinvite', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    User.updateOne({ _id: user_id }, {
+        $push: { invitesCommunity: community_id }
+    }, function (err) {
+        if (err) throw err;
+
+        Community.updateOne({ _id: community_id }, {
+            $push: { invitedUsers: user_id }
+        }, function (err) {
+            if (err) throw err;
+            return res.end();
+
+        });
+
+
+    });
+
+});
+
+//2 way user can and admin can also cancel
+app.post('/community/cancelinvite', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    User.updateOne({ _id: user_id }, {
+        $pull: { invitesCommunity: community_id }
+    }, function (err) {
+        if (err) throw err;
+
+        Community.updateOne({ _id: community_id }, {
+            $pull: { invitedUsers: user_id }
+        }, function (err) {
+            if (err) throw err;
+            return res.end();
+
+        });
+
+
+    });
+
+});
+
+app.post('/community/acceptinvite', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    User.updateOne({ _id: user_id }, {
+        $pull: { invitesCommunity: community_id },
+        $push: { myCommunity: community_id }
+    }, function (err) {
+        if (err) throw err;
+
+        Community.findOneAndUpdate({ _id: community_id }, {
+            $pull: { invitedUsers: user_id },
+            $push: { members: user_id },
+        }, { new: true }, function (err, result) {
+            if (err) throw err;
+            if (result) {
+                var count = 1 + result.admins.length + result.members.length;
+                return res.json({ _id: result._id, name: result.name, image: result.image, count: count, });
+            }
+            else {
+                return res.sendStatus(404).end();
+            }
+
+        });
+
+
+    });
+
+});
+
+
+app.post('/community/joinuser', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    User.updateOne({ _id: user_id }, {
+        $push: { myCommunity: community_id }
+    }, function (err) {
+        if (err) throw err;
+
+        Community.updateOne({ _id: community_id }, {
+            $push: { members: user_id }
+        }, function (err) {
+            if (err) throw err;
+            return res.end();
+
+        });
+
+
+    });
+
+});
+
+app.post('/community/removeuser', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    User.updateOne({ _id: user_id }, {
+        $pull: { myCommunity: community_id }
+    }, function (err) {
+        if (err) throw err;
+
+        Community.updateOne({ _id: community_id }, {
+            $pull: { admins: user_id },
+            $pull: { members: user_id },
+        }, function (err) {
+            if (err) throw err;
+            return res.end();
+
+        });
+
+
+    });
+
+});
+
+app.post('/community/promoteuser', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+
+    Community.updateOne({ _id: community_id }, {
+        $pull: { members: user_id },
+        $push: { admins: user_id },
+    }, function (err) {
+        if (err) throw err;
+        return res.end();
+
+    });
+
+
+});
+
+app.post('/community/demoteuser', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var community_id = req.body.community_id;
+
+    Community.updateOne({ _id: community_id }, {
+        $pull: { admins: user_id },
+        $push: { members: user_id },
+    }, function (err) {
+        if (err) throw err;
+        return res.end();
+
+    });
+
+
+});
+
+
+app.post('/community/managecommunity/getcount', authenticate, function (req, res) {
+
+    var community_id = req.body.community_id;
+
+    Community.findOne({ _id: community_id }, function (err, result) {
+        if (err) throw err;
+        if (result) {
+            var adminscount = result.admins.length + 1;
+            var countAll = {
+                users: "Users (" + result.members.length + ")",
+                admins: "Admins (" + adminscount + ")",
+                requests: "Requests (" + result.requests.length + ")",
+            };
+            if (result.rule == 'Permission') {
+                countAll.invited = "Invited Users (" + result.invitedUsers.length + ")";
+            }
+
+            return res.json({ countAll: countAll, });
+        }
+        else {
+            return res.sendStatus(404).end();
+        }
+
+    });
+
+
+});
+
+app.get('/community/communitypanel', authenticate, function (req, res) {
+
+
+    User.findOne({ _id: req.session.header._id }).populate('ownerCommunity', '_id name image requests').populate('myCommunity', '_id name image admins members').populate('requestedCommunity', '_id name image admins members').populate('invitesCommunity', '_id name image admins members').select('_id role ownerCommunity myCommunity requestedCommunity invitesCommunity').lean().exec(function (err, result) {
+        if (err) throw err;
+        if (result) {
+
+            return res.render('communitypanel', { header: req.session.header, user: result });
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+});
+
+
+
 app.get('/testing', function (req, res) {
 
-    if (req.session.add == undefined) {
-        return res.render('create_community', { header: req.session.header, add: false });
-    }
-    else {
-        delete req.session.add;
+    return res.render('communitypanel', { header: req.session.header });
 
-        return res.render('create_community', { header: req.session.header, add: true });
-
-    }
 
 
 });
