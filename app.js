@@ -7,8 +7,9 @@ var multer = require('multer');
 var path = require('path');
 var fs = require('fs');
 var nodemailer = require('nodemailer');
-var sendmail = require('./public/sendmail');
-var newUserMail = require('./public/newUserMail');
+var sendmail = require('./controllers/sendmail');
+var newUserMail = require('./controllers/newUserMail');
+var userTypeForCommunity = require('./controllers/userTypeForCommunity');
 
 var mongoose = require('mongoose');
 require('./models/connection');
@@ -1009,11 +1010,78 @@ app.get('/community/communitypanel', authenticate, function (req, res) {
 
 });
 
+app.get('/community/search', authenticate, function (req, res) {
+
+    return res.render('search_community', { header: req.session.header });
+
+});
+
+
+app.post('/community/search', authenticate, function (req, res) {
+
+    var user_id = req.body.user_id;
+    var search;
+
+    if (req.body.search) {
+
+        var regex = new RegExp((req.body.search).toLowerCase(), "i");
+        search = { 'name': regex };
+    }
+    else {
+        search = {};
+    }
+    //query can add status not deactivated 
+    var query = {
+        $and: [search, { status: 'Activated' }, { owner: { $ne: user_id } }, { admins: { $ne: user_id } }, { members: { $ne: user_id } }, { requests: { $ne: user_id } }, { invitedUsers: { $ne: user_id } }]
+
+    };
+
+
+    Community.find(query, '_id name description owner rule image admins members', { sort: { rule: 1 } }).lean().exec(function (err, result) {
+        if (err) throw err;
+
+        for (var i = 0; i < result.length; i++) {
+            result[i].count = 1 + result[i].admins.length + result[i].members.length;
+            delete result[i].owner;
+            delete result[i].admins;
+            delete result[i].members;
+
+        }
+
+        return res.json(result);
+
+    });
+
+});
+
+app.get('/community/communityprofile/:_id', authenticate, function (req, res) {
+    var _id = req.params._id;
+
+    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
+        if (err) throw err;
+        if (result) {
+            
+            var type = userTypeForCommunity(req.session.header._id, result);
+            delete result.requests;
+            delete result.invitedUsers;
+
+            return res.render('community_profile', { header: req.session.header, community: result, type: type });
+
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+
+});
+
 
 
 app.get('/testing', function (req, res) {
 
-    return res.render('communitypanel', { header: req.session.header });
+    return res.render('community_profile', { header: req.session.header, type: "Admin" });
 
 
 

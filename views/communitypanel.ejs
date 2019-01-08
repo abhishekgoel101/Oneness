@@ -21,7 +21,7 @@
     <a class="btn community-head-btn active" href="/community/communitypanel">
       <i class="fa fa-users"></i>
     </a>
-    <a class="btn community-head-btn" style="margin-left:10px" href="/community/list">
+    <a class="btn community-head-btn" style="margin-left:10px" href="/community/search">
       <i class="fa fa-search"></i>
     </a>
 </div>
@@ -54,7 +54,7 @@
 
             <div class='col-sm-12 noCommunity well' style='margin-top:5px;font-weight:bold'>
                 <center>No Community Joined,Requested,Invited.</center><br /><center>
-                <a class='btn btn-default' href='/community/list'>Click here for more communities</a></center>
+                <a class='btn btn-default' href='/community/search'>Click here for more communities</a></center>
                  </div>
 
         </div>
@@ -182,21 +182,22 @@ var parent=elem.closest('.requestedCommunity');
         text: 'YES',
         btnClass: 'btn-green',
         action: function(){
-        $(parent).fadeOut(1000);  
+
             $.ajax({
               type:'POST',
               url:'/community/cancelrequest',
               contentType : "application/json",
               data:JSON.stringify({user_id:user_id,community_id:community_id}),
               success:function(data){
-              $(parent).remove();
+                $(parent).fadeOut(600,function(){
+                      $(this).remove();
+                });
 
               },
                 
               error:function(jqxhr,err){
                 console.log(err); 
                 notie.alert({type: 3, text:'Something went wrong!', time: 2});
-                $(parent).fadeIn(0); 
                 
                 }
 
@@ -230,22 +231,22 @@ var parent=elem.closest('.invitesCommunity');
         text: 'YES',
         btnClass: 'btn-green',
         action: function(){
-        $(parent).fadeOut(1000);  
             $.ajax({
               type:'POST',
               url:'/community/cancelinvite',
               contentType : "application/json",
               data:JSON.stringify({user_id:user_id,community_id:community_id}),
               success:function(data){
-              $(parent).remove();
+                $(parent).fadeOut(600,function(){
+                      $(this).remove();
+                });
 
               },
                   
               error:function(jqxhr,err){
                 console.log(err); 
                 notie.alert({type: 3, text:'Something went wrong!', time: 2});
-                $(parent).fadeIn(0); 
-                
+               
                 }
 
               });
@@ -271,7 +272,7 @@ var community='<div class="col-sm-12 col-xs-12 myCommunity community-div" style=
 
 //$('#myCommunity').append(community);
 
-$(community).hide().appendTo("#myCommunity").fadeIn(1000);
+$(community).hide().appendTo("#myCommunity").fadeIn(600);
 
 }
 
@@ -288,22 +289,22 @@ var parent=elem.closest('.invitesCommunity');
         text: 'YES',
         btnClass: 'btn-green',
         action: function(){
-        $(parent).fadeOut(1000);  
             $.ajax({
               type:'POST',
               url:'/community/acceptinvite',
               contentType : "application/json",
               data:JSON.stringify({user_id:user_id,community_id:community_id}),
               success:function(data){
-              $(parent).remove();
+                $(parent).fadeOut(600,function(){
+                      $(this).remove();
               createmyCommunityElement(data._id,data.name,data.image,data.count);
 
+                });
               },
                   
               error:function(jqxhr,err){
                 console.log(err); 
                 notie.alert({type: 3, text:'Something went wrong!', time: 2});
-                $(parent).fadeIn(0); 
                 
                 }
 

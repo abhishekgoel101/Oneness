@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+<% include partials/header %>
+
+<body>
+
+<div id="wrapper">
+<% include partials/sidebar %>
+
+<div id="page-content-wrapper" style="padding:0;margin-top:60px"> <!--Margin Top is new-->
+         <div class="container-fluid page-content-div" style="padding:0">
+            <div class="row">
+               <div class="col-lg-12 scoll-possible" style="padding:0">
+
+
+  
+  <style>
+  .community-name {
+      border: 0;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: bold;
+      word-wrap: break-word;
+      font-size: 17px;
+      padding:12px 0 0 0;
+      outline: none !important;
+      background-color: rgba(0, 0, 0, 0);
+  }
+  .community-description {
+      border: 0;
+      font-family: 'Open Sans', sans-serif;
+      word-wrap: break-word;
+      font-size: 16px;
+      color: #000;
+      outline: none !important;
+      background-color: rgba(0, 0, 0, 0);
+  }
+  .totalUsers {
+      padding:0;
+      margin:0;
+      font-weight: 600;
+      color: #7D7D7D;
+      text-decoration: none;
+      word-wrap: break-word;
+      text-transform: capitalize;
+  }
+  .community-description-full{
+    display:none;
+  }
+  @media(max-width:768px){
+    .community-name{
+        border: 0;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: bold;
+        padding:15px 0 0 5px;
+        overflow:scroll;
+        word-wrap: break-word;
+        font-size: 15px;
+        color: #000;
+        outline: none !important;
+        background-color: rgba(0, 0, 0, 0);
+    }
+  }
+  </style>
+<!--=======================================================-->
+<div class="community-header-top" style="height:50px;padding-top:6px;">
+  <div class="col-sm-4 community-sub-head">
+      <a class="btn community-head-btn" href="/community/communitypanel">
+        <i class="fa fa-users"></i>
+      </a>
+      <a class="btn community-head-btn active" style="margin-left:10px" href="/community/search">
+        <i class="fa fa-search"></i>
+      </a>
+  </div>
+  <div class="col-sm-4 col-sm-push-4 pc" style="padding:0 50px 0 0">
+    <input class="form-control searchInput" type="text" placeholder="Search Community..." />
+  </div>
+</div>
+
+  <div class="community-header-top mobile" style="width:100%;padding-top:6px;background-image: linear-gradient(to top, #4ba2b7, #42a6be, #38aac6, #29adcd, #0fb1d5);">
+    <div class="col-sm-4 col-xs-10 col-xs-push-1">
+      <input class="form-control searchInput" type="text" placeholder="Search Community..." />
+    </div>
+  </div>
+<!--=======================================================-->
+    <div class="col-sm-12">
+        
+        <br/>
+      <div class="container">
+            <div style="display:none;" class="loading">
+            <center><img src="/loading.gif" /></center>
+        </div>
+
+        <div class="search" id="search">
+              <!--Community List-->
+        </div>
+
+      </div>
+
+    </div>
+</div>
+
+
+<script src="/javascripts/Common.js"></script>
+<script src="/Plugins/js/notie.min.js"></script>
+
+<script>
+var selector = '.nav li';
+$(selector).removeClass('active');
+$('#community-panel-nav').addClass('active');
+</script>
+
+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+function makeCommunities(community)
+{
+var communities="";
+
+if(community.length)
+{
+for(var i=0;i<community.length;i++)
+{
+communities+='<div class="container searchCommunity" style="padding:0"><div class="panel community-show-item panel-default allSidesSoft" style=" padding:0;background:white;"><div class="panel-body" style="padding:0;padding-top:20px">  <div class="col-sm-2 col-xs-3 col-lg-1 col-md-2">    <a href="communityprofile/'+community[i]._id+'">       <img src="'+community[i].image+'" class="allSides" style="height:70px;width:70px;border:3px solid rgb(235, 235, 235)">    </a>  </div>  <div class="col-sm-8 col-xs-6 col-lg-8 col-md-8 community-name">    <a href="communityprofile/'+community[i]._id+'" class="community-name">'+community[i].name+'    </a>  </div>  <div class="col-sm-2 col-xs-3 col-lg-3 col-md-2" style="padding:15px 10px 0 10px"><div><button class="btn btn-primary btn-sm pull-right" ';
+
+if(community[i].rule =="Permission")
+{
+communities+=' onclick=sendRequest(this,"<%=header._id%>","'+community[i]._id+'"); >Ask To Join</button>';
+}
+else
+{
+communities+=' onclick=joinUser(this,"<%=header._id%>","'+community[i]._id+'");>&nbsp;&nbsp; Join &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>';
+}
+
+communities+='</div>  </div></div><div class="panel-body" style="padding:10px 0 10px 0;">  <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12">    <p class="totalUsers">'+community[i].count+' Members    </p>  </div>'; 
+
+
+ 
+ communities+='<div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 community-description" style="font-size:16px"><div class="community-description community-description-less" >';
+ 
+    var lessDesc=(community[i].description).replace(/<(?:.|\n)*?>/gm,'').substring(0,200);
+     if(community[i].description.length>200)
+    {
+    lessDesc +=lessDesc+'......';
+    }
+    
+    communities +=lessDesc;
+    communities +='</div>';
+    if(community[i].description.length>200)
+    {
+        communities +='<div class="community-description community-description-full">';
+        var fullDesc = (community[i].description).replace(/<(?:.|\n)*?>/gm,'');
+        communities +=fullDesc;
+        communities +='</div>';
+        communities+='<button class="btn badge expand" style="outline: none;">More</button>';
+    }
+
+    communities +='</div></div></div></div>'
+}
+
+}
+else
+{
+    communities='<div class="well"><h4>OOPS...!!!</h4>\
+                 <p>No such Community currently available for you to join</p></div>';
+}
+
+$( "#search" ).empty();
+$(".loading").css("display", "none"); 
+$('#search').append(communities);
+$('#search').fadeIn(100);
+
+}
+
+</script>
+
+
+<script>
+
+function fetchCommunity(search_value)
+{
+    $('#search').hide();
+
+    $.ajax({
+        type:'POST',
+        url:'/community/search',
+        contentType : "application/json",
+        data:JSON.stringify({user_id:"<%=header._id%>",search:search_value}),
+        beforeSend:function(){
+            $(".loading").css("display", "block"); 
+            },
+         
+        success:function(community){
+
+            makeCommunities(community);
+        },
+        
+        error:function(jqxhr,err){
+        console.log(err); 
+        notie.alert({type: 3, text:'Something went wrong!', time: 2});
+        
+        $(".loading").css("display", "none"); 
+        $('#search').show();
+        
+        }
+
+        });
+
+
+
+}
+
+
+$(document).ready(function(){
+
+fetchCommunity('');
+
+$('.searchInput').on("keyup",function(){
+fetchCommunity($(this).val());
+
+});
+
+$("#search").on("click", ".expand", function () {
+
+var val = $(this).text();
+var elem=$(this);
+
+if (val == "More") {
+
+  $(elem).prevAll('.community-description-less:first').hide();
+  $(elem).prevAll('.community-description-full:first').show();
+  $(elem).text("Less");
+
+  
+} else {
+   $(elem).prevAll('.community-description-full:first').hide();
+  $(elem).prevAll('.community-description-less:first').show();
+  $(elem).text("More");
+ 
+}
+return false;
+});
+
+
+
+
+
+
+
+
+
+
+});
+
+function sendRequest(elem,user_id,community_id)
+{
+    
+var parent=elem.closest('.searchCommunity');
+
+    $.ajax({
+        type:'POST',
+        url:'/community/sendrequest',
+        contentType : "application/json",
+        data:JSON.stringify({user_id:user_id,community_id:community_id}),
+        success:function(data){
+        $(elem).replaceWith("<button class='btn btn-primary disabled pull-right'>Requested</button>");    
+            $(parent).fadeOut(600,function(){
+                    $(this).remove();
+
+            });
+
+        },
+        
+        error:function(jqxhr,err){
+        console.log(err); 
+        notie.alert({type: 3, text:'Something went wrong!', time: 2});
+        
+        }
+
+        });
+    
+
+}
+
+function joinUser(elem,user_id,community_id)
+{
+var parent=elem.closest('.searchCommunity');
+
+    $.ajax({
+        type:'POST',
+        url:'/community/joinuser',
+        contentType : "application/json",
+        data:JSON.stringify({user_id:user_id,community_id:community_id}),
+        success:function(data){
+        $(elem).replaceWith("<button class='btn btn-success disabled pull-right'>Joined</button>");    
+            $(parent).fadeOut(600,function(){
+                    $(this).remove();
+
+            });
+
+        },
+        
+        error:function(jqxhr,err){
+        console.log(err); 
+        notie.alert({type: 3, text:'Something went wrong!', time: 2});
+        
+        }
+
+        });
+    
+
+}
+
+</script>
+
+
+</body>
+</html>
+

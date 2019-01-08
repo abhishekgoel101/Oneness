@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+
+<% include partials/header %>
+
+<body>
+
+<div id="wrapper">
+<% include partials/sidebar %>
+
+
+<div id="page-content-wrapper" style="padding:0;margin-top:60px"> <!--Margin Top is new-->
+         <div class="container-fluid page-content-div" style="padding:0">
+            <div class="row">
+               <div class="col-lg-12 scoll-possible" style="padding:0">
+
+<% include partials/community_bar %>
+  
+
+<style>
+  .child-reply-input{
+    display: none !important;
+  }
+</style>
+<link rel='stylesheet' href='/stylesheets/Discussion.css' />
+
+<div class="container" style="width:94% !important">
+      
+    <div class="col-sm-3 col-xs-12">
+      <div class="panel panel-default allSidesSoft" style="border-radius:0">
+        
+        <%
+          if(type=='Member' ||type=='Admin' ||type=='Owner')
+          {
+        %>
+          <div class="panel-heading" style="border:0;border-radius:0">
+              Members
+              <a href="/community/communitymembers/<%=community._id%>" style="float:right">View all</a>
+          </div>
+        <% 
+         }
+        %>
+
+        <div class="panel-body" style="border:0;border-radius:0">
+          
+          <div class="col-sm-12 col-xs-12" style="padding:0" id="membersDiv-4joinedUser">
+          
+          <%
+          if(type=='Member' || type=='Admin' || type=='Owner')
+          {
+            var i=0;
+            for(var j=0;j<community.members.length && i<4;j++,i++)
+            {
+          %>
+
+              <div class="col-sm-6 col-xs-3 col-md-3 col-lg-3 center-all" style="padding:0;">
+                <a href="/viewprofile/<%=community.members[j]._id%>" class="communityProfileUserImage">
+                  <img class="communityProfileUserImage allSidesSoft" src="<%=community.members[j].image%>" />
+                </a>
+              </div>
+            <%
+            }
+      
+
+            for(var j=0;j<community.admins.length && i<4;j++,i++)
+            {
+          %>
+
+              <div class="col-sm-6 col-xs-3 col-md-3 col-lg-3 center-all" style="padding:0;">
+                <a href="/viewprofile/<%=community.admins[j]._id%>" class="communityProfileUserImage">
+                  <img class="communityProfileUserImage allSidesSoft" src="<%=community.admins[j].image%>" />
+                </a>
+              </div>
+            <%
+            }
+           
+
+           if(i<4)
+            {
+          %>
+              <div class="col-sm-6 col-xs-3 col-md-3 col-lg-3 center-all" style="padding:0;">
+                <a href="/viewprofile/<%=community.owner._id%>" class="communityProfileUserImage">
+                  <img class="communityProfileUserImage allSidesSoft" src="<%=community.owner.image%>" />
+                </a>
+              </div>
+            <%
+            }
+            
+          }
+          else if(type=="Invited")
+          {
+          %>    
+          <button class="btn btn-primary joinBtn">Accept Invite</button>
+          <%
+          }
+          else if(type=="Requested")
+          {
+          %>
+          <button class="btn btn-primary joinBtn disabled" >Requested</button>
+          <%
+          }
+          else
+          {
+                if(community.rule=='Permission')
+                {
+              %>
+              <button class="btn btn-primary joinBtn">Ask To Join</button>
+              <%
+              }
+              else
+              {
+              %>
+              <button class="btn btn-primary joinBtn">Join</button>
+              <%
+              }
+          }
+          %>
+
+          </div>
+          
+        </div>
+        <div class="panel-footer community-panel-sideBtn-link">
+
+        <%  
+          if(type=="Owner" || type=="Admin" || type=="Member")
+          {
+          %>  
+              <a href="/community/communitymembers/<%=community._id%>" >
+                <%=(1+community.members.length+community.admins.length)%> Members
+              </a>
+             <% 
+              if(type!='Owner')
+              {
+               %>
+                <a onclick="leaveCommunity('<%=header._id%>','<%=community._id%>')" style="float:right;cursor:pointer">
+                  Leave Community
+                </a>
+
+            <%
+              }
+            }
+            else
+            {
+              %>  
+              <p class="center-all" style="margin:0">
+               <%=(1+community.members.length+community.admins.length)%>  Members
+            </p>  
+          <%
+            }
+            %>
+
+        </div>
+      </div>
+
+        <div class="panel panel-default allSidesSoft" style="border-radius:0">
+          <div class="panel-heading" style="border:0;border-radius:0">
+            Community Admins
+          </div>
+          <div class="panel-body" style="border:0;border-radius:0">
+            <div id="commuity-owner-detail">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 adminInfo">  <div class="col-sm-6 col-md-6 col-lg-4 col-xs-4 center-all">      <a href="/viewprofile/<%=community.owner._id%>"><img src="<%=community.owner.image%>" class="adminPic allSides"></a>  </div><div class="col-sm-6 col-md-6 col-lg-8 col-xs-8 adminContent" style="padding:0">  <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" style="padding:0">    <span class="label label-success" style="margin-top:10px;">Owner</span>  </div>   <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" style="overflow:scroll;padding:0;">     <a href="/viewprofile/<%=community.owner._id%>"><%=community.owner.name%></a>   </div></div></div>
+                       
+            </div>
+
+
+            <div id="commuity-admins-detail">
+              <!--Admin Info-->
+      
+      <%
+        for(var i=0;i<community.admins.length;i++)
+        {
+      %>
+            <div class="col-sm-12 col-md-12 col-lg-12 adminInfo">  <div class="col-sm-6 col-md-6 col-lg-4 col-xs-4 center-all">      <a href="/viewprofile/<%=community.admins[i]._id%>"><img src="<%=community.admins[i].image%>" class="adminPic allSides"></a>  </div><div class="col-sm-6 col-md-6 col-lg-8 col-xs-8 adminContent" style="padding:0">  <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" style="padding:0">    <span class="label label-warning" style="margin-top:10px;">Admin</span>  </div>   <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" style="overflow:scroll;padding:0;">     <a href="/viewprofile/<%=community.admins[i]._id%>"><%=community.admins[i].name%></a>   </div></div></div>
+
+      <%
+        }
+      %>
+
+
+            </div>
+          </div>
+        </div>
+    </div>
+    <style>
+      .full-description{
+        display:none;
+      }
+      .less-description-btn{
+        display: none;
+      }
+    </style>
+    <div class="col-sm-8 col-xs-12 separator-community-admin" style="padding:0 10px 10px 10px;">
+
+      <div class="panel panel-default allSidesSoft" style="border-radius:0">
+        <div class="panel-heading center-all" style="border:0;border-radius:0">
+          About Community
+        </div>
+  
+   <% var filterDesc=(community.description).replace(/<(?:.|\n)*?>/gm,'');
+    var lessDesc=filterDesc.substring(0,200);
+     if(community.description.length>200)
+    {
+    lessDesc +=lessDesc+'......';
+    }
+
+    %>
+
+        <div class="panel-body" style="border:0;border-radius:0;overflow:scroll">
+
+          <p class="short-description center-all">
+                <%=lessDesc%> 
+          </p>
+          <div class="full-description">
+          
+          <%=community.description%>
+          
+          </div>
+          
+        </div>
+       <% 
+        if(community.description.length>200)
+        {
+        %>
+          <div class="panel-footer center-all">
+                  <a class="btn btn-default btn-sm community-profile-btn more-description-btn" onclick="showHideDescription(1)" style="cursor:pointer">
+                    More <i class="fa fa-info-circle"></i>
+                  </a>
+                  <a class="btn btn-default btn-sm community-profile-btn less-description-btn" onclick="showHideDescription(0)" style="cursor:pointer">
+                    Less <i class="fa fa-info-circle"></i>
+                  </a>
+          </div>
+       <%
+        }
+      %>
+      </div>
+
+        <div class="col-sm-12" id="needGlobalInProfile" style="padding:0">
+            <!--Here global will come-->
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+
+<script src="/javascripts/Common.js"></script>
+<script src="/Plugins/js/notie.min.js"></script>
+
+<script>
+var selector = '.nav li';
+$(selector).removeClass('active');
+$('#community-panel-nav').addClass('active');
+</script>
+
+<script>
+
+function showHideDescription(mode)
+{
+if(mode==0)
+{
+$('.full-description').hide();  
+$('.less-description-btn').hide();
+$('short-description').fadeIn(500);  
+$('.more-description-btn').fadeIn(500);
+
+}
+else
+{
+
+$('.short-description').hide();  
+$('.more-description-btn').hide();
+$('.full-description').fadeIn(500);  
+$('.less-description-btn').fadeIn(500);;
+
+}
+
+}
+
+
+var topButton="";
+<%
+          if(type=="Owner" || type=="Admin" ||type=="Member")
+          {}
+          else if(type=="Invited")
+          {
+          %>    
+
+          topButton='<button class="btn btn-info community-panel-btn joinBtn"  style="float:right">Accept Invite</button>';
+        
+          <%
+          }
+          else if(type=="Requested")
+          {
+          %>
+
+          topButton='<button class="btn btn-info community-panel-btn joinBtn disabled"  style="float:right">Requested</button>';
+          
+          <%
+          }
+          else
+          {
+              if(community.rule=='Permission')
+                {
+              %>
+
+              topButton='<button class="btn btn-info community-panel-btn joinBtn"  style="float:right">Ask To Join</button>';
+          
+              <%
+              }
+              else
+              {
+              %>
+              
+              topButton='<button class="btn btn-info community-panel-btn joinBtn"  style="float:right">Join</button>';
+
+              <%
+              }
+          }
+          %>
+if(topButton!="")
+{
+$('.buttonContainer').append(topButton);
+
+}
+
+function leaveCommunity(user_id,community_id)
+{
+    $.confirm({
+    draggable:false,
+    title: 'Leave Community',
+    content: 'Do you really want to leave this community... ',
+    buttons: {
+        yes:{
+        text: 'YES',
+        btnClass: 'btn-green',
+        action: function(){            
+
+        $.ajax({
+            type:'POST',
+            url:'/community/removeuser',
+            contentType : "application/json",
+            data:JSON.stringify({user_id:"<%=header._id%>",community_id:"<%=community._id%>"}),
+            success:function(data){
+            document.location.href="/community/communityprofile/<%=community._id%>";      
+                  
+            },
+            
+            error:function(jqxhr,err){
+            console.log(err); 
+            notie.alert({type: 3, text:'Something went wrong!', time: 2});
+
+            }
+
+          });
+
+
+
+          }
+        
+        },
+        no:{
+        text: 'NO',
+        btnClass: 'btn-red',
+
+        }
+
+        }
+    });
+
+
+}
+
+$(document).ready(function(){
+
+$('.joinBtn').on("click",function(){
+var mode=$(this).text();
+
+if(mode=="Accept Invite")
+{
+    $.ajax({
+        type:'POST',
+        url:'/community/acceptinvite',
+        contentType : "application/json",
+        data:JSON.stringify({user_id:"<%=header._id%>",community_id:"<%=community._id%>"}),
+        success:function(data){
+        $('.joinBtn').text("Accepted");
+        $('.joinBtn').addClass("disabled");    
+        $('.joinBtn').fadeOut(400,function(){
+        document.location.href="/community/communityprofile/<%=community._id%>";      
+          
+            });
+
+        },
+        
+        error:function(jqxhr,err){
+        console.log(err); 
+        notie.alert({type: 3, text:'Something went wrong!', time: 2});
+
+        }
+
+        });
+
+}
+else if(mode=="Ask To Join")
+{
+    $.ajax({
+        type:'POST',
+        url:'/community/sendrequest',
+        contentType : "application/json",
+        data:JSON.stringify({user_id:"<%=header._id%>",community_id:"<%=community._id%>"}),
+        success:function(data){
+        $('.joinBtn').text("Requested");
+        $('.joinBtn').addClass("disabled");    
+
+        },
+        
+        error:function(jqxhr,err){
+        console.log(err); 
+        notie.alert({type: 3, text:'Something went wrong!', time: 2});
+
+        }
+
+       });
+
+
+
+}
+else if(mode=="Join")
+{
+    $.ajax({
+        type:'POST',
+        url:'/community/joinuser',
+        contentType : "application/json",
+        data:JSON.stringify({user_id:"<%=header._id%>",community_id:"<%=community._id%>"}),
+        success:function(data){
+        $('.joinBtn').text("Joined");
+        $('.joinBtn').addClass("disabled");    
+        $('.joinBtn').fadeOut(400,function(){
+        document.location.href="/community/communityprofile/<%=community._id%>";      
+          
+          })
+        
+        
+        },
+        
+        error:function(jqxhr,err){
+        console.log(err); 
+        notie.alert({type: 3, text:'Something went wrong!', time: 2});
+
+        }
+
+       });
+
+
+
+}
+else if(mode="Requested")
+{
+
+}
+
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
+
+
+
