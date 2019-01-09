@@ -167,6 +167,26 @@ app.get('/profile', authenticate, function (req, res) {
 
 });
 
+app.get('/viewprofile/:_id', authenticate, function (req, res) {
+
+    var _id = req.params._id;
+
+    User.findOne({ _id: _id }, function (err, result) {
+        if (err) throw err;
+        if (result) {
+
+            return res.render('view_profile', { header: req.session.header, user: result });
+
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+
+});
+
 
 app.get('/editProfile', authenticate, function (req, res) {
 
@@ -1060,7 +1080,7 @@ app.get('/community/communityprofile/:_id', authenticate, function (req, res) {
     Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
         if (err) throw err;
         if (result) {
-            
+
             var type = userTypeForCommunity(req.session.header._id, result);
             delete result.requests;
             delete result.invitedUsers;
@@ -1077,6 +1097,74 @@ app.get('/community/communityprofile/:_id', authenticate, function (req, res) {
 
 });
 
+app.get('/community/discussion/:_id', authenticate, function (req, res) {
+    var _id = req.params._id;
+
+    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
+        if (err) throw err;
+        if (result) {
+
+            var type = userTypeForCommunity(req.session.header._id, result);
+            delete result.requests;
+            delete result.invitedUsers;
+
+            return res.render('discussion', { header: req.session.header, community: result, type: type });
+
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+
+});
+
+app.get('/community/communitymembers/:_id', authenticate, function (req, res) {
+    var _id = req.params._id;
+
+    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
+        if (err) throw err;
+        if (result) {
+
+            var type = userTypeForCommunity(req.session.header._id, result);
+            delete result.requests;
+            delete result.invitedUsers;
+
+            return res.render('community_members', { header: req.session.header, community: result, type: type });
+
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+
+});
+
+app.get('/community/managecommunity/:_id', authenticate, function (req, res) {
+    var _id = req.params._id;
+
+    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
+        if (err) throw err;
+        if (result) {
+
+            var type = userTypeForCommunity(req.session.header._id, result);
+            delete result.requests;
+            delete result.invitedUsers;
+
+            return res.render('manage_community', { header: req.session.header, community: result, type: type });
+
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+
+});
 
 
 app.get('/testing', function (req, res) {

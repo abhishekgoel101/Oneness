@@ -213,8 +213,6 @@
           </p>
           <div class="full-description">
           
-          <%=community.description%>
-          
           </div>
           
         </div>
@@ -257,6 +255,9 @@ $('#community-panel-nav').addClass('active');
 </script>
 
 <script>
+
+var fullDesc=$('<textarea />').html("<%=community.description%>").text();
+$('.full-description').text(fullDesc);
 
 function showHideDescription(mode)
 {

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<% include partials/header %>
+
+<body>
+
+<div id="wrapper">
+<% include partials/sidebar %>
+
+
+<div id="page-content-wrapper" style="padding:0;margin-top:60px"> <!--Margin Top is new-->
+         <div class="container-fluid page-content-div" style="padding:0">
+            <div class="row">
+               <div class="col-lg-12 scoll-possible" style="padding:0">
+
+<% include partials/community_bar %>
+
+
+<div class="container" style="width:90% !important">
+  
+</div>
+
+<link rel='stylesheet' href='/stylesheets/Discussion.css' />
+
+<div class="container discussion-input discussion-container">
+  <div class="panel panel-default allSidesSoft" style="border-radius:0;border:1px solid rgb(182, 182, 182) !important;">
+    <div class="panel-body" style="padding:5px;background:#f9f9f9;">
+      <div class="col-sm-1 col-xs-3">
+        <a href="/community/communityprofile/5bb756b8431b7366243a365a">
+          <img src="/Upload/CommunityProfile/defaultCommunity.jpg" class="discussion-com-profile-pic allSidesSoft" style="border:2px solid #fff" />
+        </a>
+      </div>
+      <p class="col-sm-11 col-xs-9 discussion-heading">
+        Start a discussion
+      </p>
+    </div>
+<form method="POST" enctype="multipart/form-data" id="discussionPostForm">
+
+    <div class="panel-body discussion-panel-body">
+      <div class="col-sm-12 col-xs-12" style="padding:0;border-top: 1px solid white;">
+        <input type="text" style="width:100%" class="discussion-input-title" name="title" placeholder="Enter a discussion title....." id="discussion-title" autocomplete="off" required />
+      </div>
+    </div>
+
+    <div class="panel-body discussion-body">
+        <div class="col-sm-12 col-xs-12" style="padding:0;border-top: 1px solid white;">
+          <!--Textarea-->
+            <textarea class="discussion-body-textarea" name="details" placeholder="Enter discussion details" id="discussion-details" autocomplete="off" required></textarea>
+          <!------------>
+        </div>
+
+        <div class="link-preview-main col-sm-12 col-xs-12">
+          <!-- preview here -->
+        </div>
+        <div class="tag-conatiner-custom-div">
+          <select id="tagEditor" name='tags' class="form-control input-sm select2-multiple" style="width:100%" multiple>
+            <!--Tags option appended here-->
+          </select>
+        </div>
+
+        <div class="image-preview-main col-sm-12 col-xs-12">
+          <center>
+            <img src="" class="allSides preview-image" id="previewImage"/>
+          </center>
+        </div>
+        <input type="file" class="discussion-file-btn" name="discussionImageFile" id="discussionImageFile" accept="image/x-png,image/gif,image/jpeg" />
+        <div class="col-sm-12 col-xs-12" style="padding:0;">
+          <a class="discussion-image-btn" id="discussionImageClickBtn"><i class="fa fa-image"></i></a>
+          <a id="closeImgPreviewBtn"><i class="fa fa-window-close"></i></a>
+          <button class="btn btn-primary" type="submit" style="float:right" id="discussion-post">
+            <p class="discussion-post-btn-txt">Post</p>
+          <i class="fas fa-spinner discussion-post-spinner infinite-rotation"></i>
+          </button>
+        </div>
+    </div>
+  </form>
+  <div class="panel-footer"></div>
+  </div>
+</div>
+
+
+<div id="FeaturedParentDiv">
+  <!--Discussions-->
+</div>
+
+<div id="discussionsList">
+  <!--Discussions-->
+</div>
+
+
+</div>
+</div>
+<div class="endLoader">
+    <center><img src="/app_pics/bg/loading.gif" class="loading"/></center>
+</div>
+<script src="/Plugins/js/vibrant.js"></script>
+<script src="/javascripts/Common.js"></script>
+<script src="/Plugins/js/notie.min.js"></script>
+<script src="/javascripts/helper/DScrapingApi.js"></script>
+<script src="/javascripts/helper/DiscussionHelper.js"></script>
+<script src="/javascripts/Discussion.js"></script>
+<script src="/javascripts/DiscussionComments.js"></script>
+<script src="/Plugins/js/select2.min.js"></script>
+<script src="/javascripts/TagsCustom.js"></script>
+<script>
+  initDiscussion();
+  $(window).scroll(function() {
+     if($(window).scrollTop() + $(window).height() > $(document).height()-200) {
+       if(!dis_wait && ScrollResponseWait)
+       {
+         ScrollResponseWait = false;
+         $('.loading').css('display','block');
+         initDiscussion();
+       }
+     }
+  });
+</script>
+<script>
+var selector = '.nav li';
+$(selector).removeClass('active');
+$('#community-panel-nav').addClass('active');
+</script>
+</body>
+</html>
