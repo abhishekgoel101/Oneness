@@ -35,30 +35,94 @@
 
 <div style="margin-top:20px;margin-bottom:50px">
   <div class="col-sm-3 col-md-3 col-xs-4 col-lg-2">
-    <a class="communitymembers-head-btn" onclick="AllAdminList()" id="admins-list-btn">
-      Admins (1)
+    <a class="communitymembers-head-btn" onclick="AdminsList()" id="admins-list-btn">
+      Admins (<%=(1+community.admins.length)%>)
     </a>
   </div>
   <div class="col-sm-3 col-md-3 col-xs-4 col-lg-2">
-    <a class="communitymembers-head-btn" onclick="AllUsersList()" id="users-list-btn">
-      Users (8)
+    <a class="communitymembers-head-btn" onclick="UsersList()" id="users-list-btn">
+      Users (<%=community.members.length%>)
     </a>
   </div>
   <div class="col-sm-12">
-      <div class='col-sm-12 col-xs-12 allcoms community-user-div OwnerDivMain' style='margin-top:5px;'>
+
+  <div id="AdminsDiv">
+
+  <!--   For Owner  -->
+      <div class='col-sm-12 col-xs-12 allcoms community-user-div' style='margin-top:5px;'>
            <div class='col-sm-2 col-xs-5' style='padding:5px;'>
-               <a href='/viewprofile/5ba5ac9d393e737dbe66f5c8'>
-                 <img src='/Upload/Profile/1537584524591.jpeg' class='community-member-pic'>
+               <a href='/viewprofile/<%=community.owner._id%>'>
+                 <img src='<%=community.owner.image%>' class='community-member-pic'>
                </a>
-               <span class="label label-primary">Owner</span>
+               <span class="label label-success">Owner</span>
            </div>
            <div class='col-sm-9 col-xs-7 scrollable'>
-               <a class='comusername' href='/viewprofile/5ba5ac9d393e737dbe66f5c8'>Sameer Guglani</a>
+               <a class='comusername' href='/viewprofile/<%=community.owner._id%>'><%=community.owner.name%></a>
            </div>
       </div>
-      <div id="comUsersList">
 
+  <!--   For Admins  -->
+  <%
+  for(var i=0;i<community.admins.length;i++)
+  {
+  %>
+      <div class='col-sm-12 col-xs-12 allcoms community-user-div' style='margin-top:5px;'>
+          <div class='col-sm-2 col-xs-5' style='padding:5px;'>
+            <a href='/viewprofile/<%=community.admins[i]._id%>'>
+                <img src='<%=community.admins[i].image%>' class='community-member-pic'>
+             </a>
+           <span class='label label-warning'>Admin</span>
+             </div>
+             <div class='col-sm-10 col-xs-7 scrollable'>
+                   <a class='comusername' href='/viewprofile/<%=community.admins[i]._id%>'><%=community.admins[i].name%></a>
+                  </div>
+           </div>
+
+    <%
+      }
+    %>
+
+
+    </div>
+
+  <div id="UsersDiv">
+
+    <%
+      if(community.members.length==0)
+      {
+    %>
+      <div class='col-sm-12 col-xs-12 allcoms' style='margin-top:5px;border-top: 1px solid #ccc;padding:20px'>
+            <div class='alert alert-danger'><center><b>No User Found</b></center></div>
       </div>
+
+    <%
+      }
+      else
+      {
+    
+      for(var i=0;i<community.members.length;i++)
+      {
+    %> 
+
+    <div class='col-sm-12 col-xs-12 allcoms community-user-div' style='margin-top:5px;'>
+          <div class='col-sm-2 col-xs-5' style='padding:5px;'>
+              <a href='/viewprofile/<%=community.members[i]._id%>'>
+                  <img src='<%=community.members[i].image%>' class='community-member-pic'>
+              </a>
+          </div>
+          <div class='col-sm-10 col-xs-7 scrollable'>
+                <a class='comusername' href='/viewprofile/<%=community.members[i]._id%>'><%=community.members[i].name%></a>
+          </div>
+    </div>
+              
+    <%
+        }
+    }
+    %>
+
+
+    </div>
+
     </div>
   </div>
 </div>
@@ -79,106 +143,30 @@ $('#community-panel-nav').addClass('active');
 </script>
 
 <script>
-var id  = location.pathname.split('/')[3];
 
-function updateCountOnBtn(elmId,btntxt,count){
-  $(elmId).empty().append(btntxt+' ('+(count)+')');
-}
+AdminsList();
 
-AllAdminList();
-function AllAdminList()
+function AdminsList()
 {
+
   $("#users-list-btn").removeClass('active-link-btn');
   $("#admins-list-btn").addClass('active-link-btn');
-  $.ajax({
-         type: 'POST',
-         contentType: 'application/json',
-         data: JSON.stringify({_id:id}),
-         url: '/community/allcomadmins/'+id,
-         success: function (response) {
-           $('.OwnerDivMain').css('display','inline');
-           $('.comUsersFxnCall').remove();
-           if(response.length==1)
-           {
-             /* do stuff if no admin found if required */
-           }else{
-               updateCountOnBtn('#admins-list-btn','Admins',response.length);
-               for(i=0;i<response.length-1;i++)
-               {
-                 try {
-                  code = "<div class='col-sm-12 col-xs-12 allcoms community-user-div comUsersFxnCall' style='margin-top:5px;'>";
-                  code += "     <div class='col-sm-2 col-xs-5' style='padding:5px;'>";
-                  code += "          <a href='/viewprofile/"+response[i].AllAdmins[0]._id+"'>";
-                  code += "            <img src='/Upload/Profile/"+response[i].AllAdmins[0].profilePic+"' class='community-member-pic'>";
-                  code += "          </a>";
-                  code += "          <span class='label label-success'>Admin</span>";
-                  code += "      </div>";
-                  code += "      <div class='col-sm-10 col-xs-7 scrollable'>";
-                  code += "          <a class='comusername' href='/viewprofile/"+response[i].AllAdmins[0]._id+"'>"+response[i].AllAdmins[0].fullname+"</a>";
-                  code += "      </div>";
-                  code += " </div>";
-                }
-                catch(err){
-                  console.log(err);
-                  code ='';
-                }
-                 $('#comUsersList').append(code);
-               }
-           }
-         },
-         error: function (err) {
-             notie.alert({type: 3, text:'Something went wrong!', time: 2})
-         }
-     });
+
+  $("#UsersDiv").hide();
+  $("#AdminsDiv").show();
 }
-function AllUsersList()
+
+function UsersList()
 {
+
   $("#admins-list-btn").removeClass('active-link-btn');
   $("#users-list-btn").addClass('active-link-btn');
-  $.ajax({
-         type: 'POST',
-         contentType: 'application/json',
-         data: JSON.stringify({_id:id,limit:9999,skip:0}),
-         url: '/community/allcomusers/'+id,
-         success: function (response) {
-           var code;
-           $('.OwnerDivMain').css('display','none');
-           $('.comUsersFxnCall').remove();
-           if(response.length==1)
-           {
-             code =  "<div class='col-sm-12 col-xs-12 allcoms comUsersFxnCall' style='margin-top:5px;border-top: 1px solid #ccc;padding:20px'>";
-             code += "  <div class='alert alert-danger'><center><b>No User Found</b></center></div>";
-             code += "</div>";
-             $('#comUsersList').append(code);
-           }else{
-               updateCountOnBtn('#users-list-btn','Users',response.length-1);
-               for(i=0;i<response.length-1;i++)
-               {
-                 try {
-                    code = "<div class='col-sm-12 col-xs-12 allcoms community-user-div comUsersFxnCall' style='margin-top:5px;'>";
-                    code += "     <div class='col-sm-2 col-xs-5' style='padding:5px;'>";
-                    code += "          <a href='/viewprofile/"+response[i].AllUsers[0]._id+"'>";
-                    code += "            <img src='/Upload/Profile/"+response[i].AllUsers[0].profilePic+"' class='community-member-pic'>";
-                    code += "          </a>";
-                    code += "      </div>";
-                    code += "      <div class='col-sm-10 col-xs-7 scrollable'>";
-                    code += "          <a class='comusername' href='/viewprofile/"+response[i].AllUsers[0]._id+"'>"+response[i].AllUsers[0].fullname+"</a>";
-                    code += "      </div>";
-                    code += " </div>";
-                  }
-                  catch(err){
-                    console.log(err);
-                    code ='';
-                  }
-                 $('#comUsersList').append(code);
-               }
-             }
-         },
-         error: function (err) {
-             notie.alert({type: 3, text:'Something went wrong!', time: 2})
-         }
-     });
+
+  $("#AdminsDiv").hide();
+  $("#UsersDiv").show();
+
 }
+
 </script>
 
 </body>

@@ -245,8 +245,14 @@
 </div>
 </div>
 
+<script src="/Plugins/js/vibrant.js"></script>
 <script src="/javascripts/Common.js"></script>
 <script src="/Plugins/js/notie.min.js"></script>
+<script src="/javascripts/helper/CommunityHelper.js"></script>
+<script src="/javascripts/helper/DScrapingApi.js"></script>
+<script src="/javascripts/helper/DiscussionHelper.js"></script>
+<script src="/javascripts/CommunityProfile.js"></script>
+<script src="/javascripts/DiscussionComments.js"></script>
 
 <script>
 var selector = '.nav li';
@@ -256,8 +262,8 @@ $('#community-panel-nav').addClass('active');
 
 <script>
 
-var fullDesc=$('<textarea />').html("<%=community.description%>").text();
-$('.full-description').text(fullDesc);
+var fullDesc=$('<div />').html("<%=community.description%>").text();
+$('.full-description').html(fullDesc);
 
 function showHideDescription(mode)
 {
@@ -265,7 +271,7 @@ if(mode==0)
 {
 $('.full-description').hide();  
 $('.less-description-btn').hide();
-$('short-description').fadeIn(500);  
+$('.short-description').fadeIn(500);  
 $('.more-description-btn').fadeIn(500);
 
 }
@@ -275,7 +281,7 @@ else
 $('.short-description').hide();  
 $('.more-description-btn').hide();
 $('.full-description').fadeIn(500);  
-$('.less-description-btn').fadeIn(500);;
+$('.less-description-btn').fadeIn(500);
 
 }
 

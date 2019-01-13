@@ -369,7 +369,8 @@ app.get('/admin/userlist', authenticate, function (req, res) {
 });
 
 app.post('/admin/userlist', authenticate, function (req, res) {
-    //console.log(req.body);
+    // console.log(req.body);
+
 
     var role = req.body.roleFilter;
     var status = req.body.statusFilter;
@@ -985,34 +986,6 @@ app.post('/community/demoteuser', authenticate, function (req, res) {
 });
 
 
-app.post('/community/managecommunity/getcount', authenticate, function (req, res) {
-
-    var community_id = req.body.community_id;
-
-    Community.findOne({ _id: community_id }, function (err, result) {
-        if (err) throw err;
-        if (result) {
-            var adminscount = result.admins.length + 1;
-            var countAll = {
-                users: "Users (" + result.members.length + ")",
-                admins: "Admins (" + adminscount + ")",
-                requests: "Requests (" + result.requests.length + ")",
-            };
-            if (result.rule == 'Permission') {
-                countAll.invited = "Invited Users (" + result.invitedUsers.length + ")";
-            }
-
-            return res.json({ countAll: countAll, });
-        }
-        else {
-            return res.sendStatus(404).end();
-        }
-
-    });
-
-
-});
-
 app.get('/community/communitypanel', authenticate, function (req, res) {
 
 
@@ -1020,7 +993,7 @@ app.get('/community/communitypanel', authenticate, function (req, res) {
         if (err) throw err;
         if (result) {
 
-            return res.render('communitypanel', { header: req.session.header, user: result });
+            return res.render('community_panel', { header: req.session.header, user: result });
         }
         else {
             return res.redirect('/logout');
@@ -1074,6 +1047,82 @@ app.post('/community/search', authenticate, function (req, res) {
 
 });
 
+app.get('/community/communitymembers/:_id', authenticate, function (req, res) {
+    var _id = req.params._id;
+
+    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
+        if (err) throw err;
+        if (result) {
+
+            var type = userTypeForCommunity(req.session.header._id, result);
+            delete result.requests;
+            delete result.invitedUsers;
+
+            return res.render('community_members', { header: req.session.header, community: result, type: type });
+
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+
+});
+
+
+app.post('/community/managecommunity/getcount', authenticate, function (req, res) {
+
+    var community_id = req.body.community_id;
+
+    Community.findOne({ _id: community_id }, function (err, result) {
+        if (err) throw err;
+        if (result) {
+            var adminscount = result.admins.length + 1;
+            var countAll = {
+                users: "Users (" + result.members.length + ")",
+                admins: "Admins (" + adminscount + ")",
+                requests: "Requests (" + result.requests.length + ")",
+            };
+            if (result.rule == 'Permission') {
+                countAll.invited = "Invited Users (" + result.invitedUsers.length + ")";
+            }
+
+            return res.json({ countAll: countAll, });
+        }
+        else {
+            return res.sendStatus(404).end();
+        }
+
+    });
+
+
+});
+
+app.get('/community/managecommunity/:_id', authenticate, function (req, res) {
+    var _id = req.params._id;
+
+    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
+        if (err) throw err;
+        if (result) {
+
+            var type = userTypeForCommunity(req.session.header._id, result);
+            delete result.requests;
+            delete result.invitedUsers;
+
+            return res.render('manage_community', { header: req.session.header, community: result, type: type });
+
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+
+});
+
+
 app.get('/community/communityprofile/:_id', authenticate, function (req, res) {
     var _id = req.params._id;
 
@@ -1109,52 +1158,6 @@ app.get('/community/discussion/:_id', authenticate, function (req, res) {
             delete result.invitedUsers;
 
             return res.render('discussion', { header: req.session.header, community: result, type: type });
-
-        }
-        else {
-            return res.redirect('/logout');
-        }
-
-    });
-
-
-});
-
-app.get('/community/communitymembers/:_id', authenticate, function (req, res) {
-    var _id = req.params._id;
-
-    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
-        if (err) throw err;
-        if (result) {
-
-            var type = userTypeForCommunity(req.session.header._id, result);
-            delete result.requests;
-            delete result.invitedUsers;
-
-            return res.render('community_members', { header: req.session.header, community: result, type: type });
-
-        }
-        else {
-            return res.redirect('/logout');
-        }
-
-    });
-
-
-});
-
-app.get('/community/managecommunity/:_id', authenticate, function (req, res) {
-    var _id = req.params._id;
-
-    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
-        if (err) throw err;
-        if (result) {
-
-            var type = userTypeForCommunity(req.session.header._id, result);
-            delete result.requests;
-            delete result.invitedUsers;
-
-            return res.render('manage_community', { header: req.session.header, community: result, type: type });
 
         }
         else {

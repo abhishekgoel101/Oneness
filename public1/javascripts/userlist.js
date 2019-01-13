@@ -12,7 +12,7 @@ var table = $('#usertable').DataTable({
     "processing": true,
     'columns': [
         { 'title': 'User Id', 'data': '_id', 'orderable': false, 'searchable': false, 'sClass': 'tableId' },
-        { 'title': 'Usename/Email', 'data': 'email', 'orderable': true, 'searchable': true, 'sClass': 'tableUname' },
+        { 'title': 'Username/Email', 'data': 'email', 'orderable': true, 'searchable': true, 'sClass': 'tableUname' },
         { 'title': 'Phone', 'data': 'phone', 'orderable': false, 'searchable': false, 'sClass': 'tablePhone' },
         { 'title': 'City', 'data': 'city', 'orderable': true, 'searchable': true, 'sClass': 'tableCity' },
         { 'title': 'Status', 'data': 'status', 'orderable': true, 'searchable': false, 'sClass': 'tableStatus' },
