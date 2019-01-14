@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<% include partials/header %>
+
+<body>
+
+<div id="wrapper">
+<% include partials/sidebar %>
+
+
+<div id="page-content-wrapper" style="padding:0;margin-top:60px"> <!--Margin Top is new-->
+         <div class="container-fluid page-content-div" style="padding:0">
+            <div class="row">
+               <div class="col-lg-12 scoll-possible" style="padding:0">
+
+<% include partials/community_bar %>
+
+
+<div class="container">
+  <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12" style="padding-bottom:5px;border-bottom:1px solid #c4c4c4">
+    
+    <a href="/community/managecommunity/<%=community._id%>" class="manageCommunity-head-btn" style="color:#337AB7">
+      Manage Community
+    </a>
+    <span style="float:right;font-weight:600;margin:0;color:#6F6E6E;cursor: context-menu;">
+      Invite Users
+    </span>
+    
+  <%
+    if(type=="Owner")
+    {
+  %>
+  <a class="pc" href="/community/editcommunity/<%=community._id%>" style="float:right;font-weight:600;margin-right:15px">
+    Edit Community
+  </a>
+    
+  <%
+    }
+  %>
+    
+  </div>
+  
+  <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12" style="padding:10px 0 0 0;">
+  <div class="col-sm-4 col-lg-4 col-md-4 col-xs-12 manageCommunity-commuity-div" >
+
+    <input type="text" class="form-control" id="searchinvite" placeholder="Enter name or email..." style="margin-top:4px;" onkeyup="inviteUsersSearch('<%=community._id%>')">
+
+  </div>
+  <div class="col-sm-8 col-lg-8 col-md-8 col-xs-12" style="border-left:1px solid #CCCCCC">
+
+        <div style="display:none;" class="loading">
+        <center><img src="/loading.gif" /></center>
+        </div>
+
+    <div id='comlist'>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div> <!--Header-->
+
+<script src="/javascripts/Common.js"></script>
+<script src="/Plugins/js/notie.min.js"></script>
+
+<script>
+var selector = '.nav li';
+$(selector).removeClass('active');
+$('#community-panel-nav').addClass('active');
+</script>
+
+<script>
+
+inviteUsersSearch('<%=community._id%>');
+
+function inviteUsersSearch(community_id)
+{
+ 
+    $('#comlist').hide();
+
+    $.ajax({
+        type:'POST',
+        url:'/community/inviteuserssearch',
+        contentType : "application/json",
+        data:JSON.stringify({community_id:"<%=community._id%>",search:$('#searchinvite').val()}),
+        beforeSend:function(){
+            $(".loading").css("display", "block"); 
+            },
+         
+        success:function(users){
+
+        var code=createInviteUsers(users,community_id);
+        $('#comlist').empty();
+        $('#comlist').append(code);
+        $(".loading").css("display", "none");
+        $('#comlist').show(); 
+        
+        },
+        
+        error:function(jqxhr,err){
+        console.log(err); 
+        notie.alert({type: 3, text:'Something went wrong!', time: 2});
+        
+        $(".loading").css("display", "none"); 
+        $('#comlist').show();
+        
+        }
+
+    });
+
+
+}
+
+function createInviteUsers(users,community_id)
+{
+    var str="";    
+    if(users.length)
+    {
+      for(var i=0;i<users.length;i++)  
+      {
+
+        str+="<div class='col-sm-12 col-xs-12 allcoms community-user-div' style='margin-top:5px;'>";
+        str +="<div class='col-sm-2 col-xs-3' style='padding:5px;'>";
+        str +="<a href='/viewprofile/" + users[i]._id + "'><img src='"+users[i].image+"' class='community-member-pic'>";
+        str +="</a></div>";
+        str +="<div class='col-sm-8 col-xs-6 scrollable'>";
+
+
+        str +="<a class='comusername' href='/viewprofile/"+users[i]._id+"'>"+users[i].name+"</a>";
+
+        str+="<span class='d-flex align-items-center text-info'>"+users[i].email+"</span>";
+
+
+        str +="</div>";
+        str +="<div class='col-sm-2 col-xs-3'>";
+
+        str +="<a class='btn btn-primary btn-sm invite-btn' style='float:right' onclick='sendInvite(this,\""+users[i]._id+"\",\""+community_id+"\")'>";
+        str +="Invite</a>";
+
+        str +="</div>";
+        str +="</div>";
+    
+      }
+
+    }
+    else
+    {
+    str="<div class='col-sm-12 allcoms well well-sm' style='margin-top:5px;font-weight:bold' ><center>No Users to Invite</center></div>";
+    }
+
+    return str;
+
+}
+
+function sendInvite(elem,user_id,community_id)
+{
+  var parent=  elem.closest('.allcoms');
+    $.ajax({
+        type:'POST',
+        url:'/community/sendinvite',
+        contentType : "application/json",
+        data:JSON.stringify({user_id:user_id,community_id:community_id}),
+        success:function(data){
+        $(elem).text("Invited");
+        $(elem).addClass("disabled");    
+        $(parent).fadeOut(600,function(){
+           $(this).remove();
+          });
+
+        },
+        
+        error:function(jqxhr,err){
+        console.log(err); 
+        notie.alert({type: 3, text:'Something went wrong!', time: 2});
+
+        }
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

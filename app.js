@@ -937,8 +937,7 @@ app.post('/community/removeuser', authenticate, function (req, res) {
         if (err) throw err;
 
         Community.updateOne({ _id: community_id }, {
-            $pull: { admins: user_id },
-            $pull: { members: user_id },
+            $pull: { admins: user_id , members: user_id },
         }, function (err) {
             if (err) throw err;
             return res.end();
@@ -1070,6 +1069,69 @@ app.get('/community/communitymembers/:_id', authenticate, function (req, res) {
 
 });
 
+app.get('/community/inviteusers/:_id', authenticate, function (req, res) {
+    var _id = req.params._id;
+
+    Community.findOne({ _id: _id }).populate('owner', '_id').populate('admins', '_id').populate('members', '_id').populate('requests', '_id').populate('invitedUsers', '_id').select("_id name owner rule status image admins members requests invitedUsers").lean().exec(function (err, result) {
+        if (err) throw err;
+        if (result) {
+
+            var type = userTypeForCommunity(req.session.header._id, result);
+
+            delete result.owner;
+            delete result.admins;
+            delete result.members;
+            delete result.requests;
+            delete result.invitedUsers;
+
+            return res.render('invite_users', { header: req.session.header, community: result, type: type });
+
+        }
+        else {
+            return res.redirect('/logout');
+        }
+
+    });
+
+
+});
+
+app.post('/community/inviteuserssearch', authenticate, function (req, res) {
+
+    var community_id = req.body.community_id;
+    var search;
+
+    if (req.body.search) {
+
+        var regex = new RegExp((req.body.search).toLowerCase(), "i");
+        search = { 'name': regex };
+        search = { $or: [{ 'name': regex }, { 'email': regex }] };
+
+    }
+    else {
+        search = {};
+    }
+    //query can add status not deactivated 
+    var query = {
+        $and: [search, { activated: true }, { ownerCommunity: { $ne: community_id } }, { myCommunity: { $ne: community_id } }, { requestedCommunity: { $ne: community_id } }, { invitesCommunity: { $ne: community_id } }]
+
+    };
+
+    User.find(query, '_id name email image').lean().exec(function (err, result) {
+        if (err) throw err;
+
+        if (result) {
+            return res.json(result);
+        }
+        else {
+            return res.sendStatus(404).end();
+        }
+
+    });
+
+
+});
+
 
 app.post('/community/managecommunity/getcount', authenticate, function (req, res) {
 
@@ -1082,10 +1144,11 @@ app.post('/community/managecommunity/getcount', authenticate, function (req, res
             var countAll = {
                 users: "Users (" + result.members.length + ")",
                 admins: "Admins (" + adminscount + ")",
-                requests: "Requests (" + result.requests.length + ")",
+                invites: "Invited Users (" + result.invitedUsers.length + ")",
             };
+
             if (result.rule == 'Permission') {
-                countAll.invited = "Invited Users (" + result.invitedUsers.length + ")";
+                countAll.requests = "Requests (" + result.requests.length + ")";
             }
 
             return res.json({ countAll: countAll, });
@@ -1102,11 +1165,15 @@ app.post('/community/managecommunity/getcount', authenticate, function (req, res
 app.get('/community/managecommunity/:_id', authenticate, function (req, res) {
     var _id = req.params._id;
 
-    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
+    Community.findOne({ _id: _id }).populate('owner', '_id').populate('admins', '_id').populate('members', '_id').populate('requests', '_id').populate('invitedUsers', '_id').select("_id name owner rule status image admins members requests invitedUsers").lean().exec(function (err, result) {
         if (err) throw err;
         if (result) {
 
             var type = userTypeForCommunity(req.session.header._id, result);
+
+            delete result.owner;
+            delete result.admins;
+            delete result.members;
             delete result.requests;
             delete result.invitedUsers;
 
@@ -1119,6 +1186,92 @@ app.get('/community/managecommunity/:_id', authenticate, function (req, res) {
 
     });
 
+
+});
+
+app.post('/community/managecommunity/getdetails', authenticate, function (req, res) {
+
+    var community_id = req.body.community_id;
+    var detailsOf = req.body.detailsOf;
+
+    if (detailsOf == "owner admins") {
+
+        Community.findOne({ _id: community_id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id').populate('requests', '_id').populate('invitedUsers', '_id').select("_id owner status rule admins members requests invitedUsers").lean().exec(function (err, result) {
+            if (err) throw err;
+            if (result) {
+
+                //var type = userTypeForCommunity(req.session.header._id, result);
+
+                var adminscount = result.admins.length + 1;
+                var countAll = {
+                    users: "Users (" + result.members.length + ")",
+                    admins: "Admins (" + adminscount + ")",
+                    invites: "Invited Users (" + result.invitedUsers.length + ")",
+                };
+
+                if (result.rule == 'Permission') {
+                    countAll.requests = "Requests (" + result.requests.length + ")";
+                }
+
+                result.countAll = countAll;
+
+                delete result.members;
+                delete result.requests;
+                delete result.invitedUsers;
+
+
+                return res.json(result);
+
+            }
+            else {
+                return res.sendStatus(404).end();
+            }
+
+        });
+
+
+    }
+    else {
+
+        Community.findOne({ _id: community_id }).populate('owner', '_id').populate('admins', '_id').populate('members', '_id').populate('requests', '_id').populate('invitedUsers', '_id').populate(detailsOf, '_id name image').select("_id owner status rule admins members requests invitedUsers").lean().exec(function (err, result) {
+            if (err) throw err;
+            if (result) {
+
+                //var type = userTypeForCommunity(req.session.header._id, result);
+
+                var adminscount = result.admins.length + 1;
+                var countAll = {
+                    users: "Users (" + result.members.length + ")",
+                    admins: "Admins (" + adminscount + ")",
+                    invites: "Invited Users (" + result.invitedUsers.length + ")",
+                };
+
+                if (result.rule == 'Permission') {
+                    countAll.requests = "Requests (" + result.requests.length + ")";
+                }
+
+                result.countAll = countAll;
+
+                var temp = result[detailsOf];
+
+                delete result.owner;
+                delete result.admins;
+                delete result.members;
+                delete result.requests;
+                delete result.invitedUsers;
+
+                result[detailsOf] = temp;
+
+                return res.json(result);
+
+            }
+            else {
+                return res.sendStatus(404).end();
+            }
+
+        });
+
+    }
 
 });
 
