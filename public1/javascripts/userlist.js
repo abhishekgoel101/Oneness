@@ -4,7 +4,7 @@ var edbtn = '<a class="btn btn-primary btn-sm editbtn actionbtns"><span class="f
 var acbtn = '<a class="btn btn-success btn-sm acbtn actionbtns" id=""><span class="fa fa-check-circle"></span></a></center>';
 var deacbtn = '<a class="btn btn-warning btn-sm deacbtn actionbtns" id=""><span class="fa fa-times-circle"></span></a></center>';
 
-$.fn.dataTable.ext.errMode = 'throw';
+
 
 var table = $('#usertable').DataTable({
     "lengthMenu": [10, 25, 50],
@@ -108,8 +108,9 @@ $(document).ready(function () {
             $('#status').val('false');
         }
 
-        $('#updateUser').modal('show');
         $('#role').val(tds[5].innerHTML);
+
+        $('#updateUser').modal('show');
 
     });
 

@@ -527,6 +527,140 @@ app.post('/admin/activation', authenticate, function (req, res) {
 
 });
 
+app.get('/admin/communitylist', authenticate, function (req, res) {
+
+    return res.render('community_list', { header: req.session.header });
+
+});
+
+app.post('/admin/communitylist', authenticate, function (req, res) {
+
+    // console.log(req.body);
+
+    var rule = req.body.ruleFilter;
+    var start = parseInt(req.body.start);
+    var length = parseInt(req.body.length);
+    var order = req.body.order[0];
+    var orderby = {};
+    var dir;
+
+    var searchStr = req.body.search.value;
+    if (req.body.search.value) {
+        var regex = new RegExp(req.body.search.value, "i")
+        searchStr = { $or: [{ 'name': regex }, { 'location': regex }] };
+    }
+    else {
+        searchStr = {};
+    }
+    var subquery = {};
+
+    if (rule != '') {
+        subquery.rule = rule;
+    }
+
+    var query = {
+        $and: [subquery, searchStr]
+    };
+
+    if (order.dir == 'asc') {
+        dir = 1;
+    }
+    else {
+        dir = -1;
+    }
+
+
+    if (order.column == '1') {
+        orderby.name = dir;
+    }
+    else if (order.column == '2') {
+        orderby.rule = dir;
+    }
+    else if (order.column == '3') {
+        orderby.location = dir;
+    }
+    else {
+        orderby.dateCreated = dir;
+    }
+
+    //console.log(orderby);
+
+    var recordsTotal = 0;
+    var recordsFiltered = 0;
+    Community.count({}, function (err, c) {
+        recordsTotal = c;
+        // console.log(c);
+
+        Community.count(query, function (err, c) {
+            recordsFiltered = c;
+            //   console.log(c);
+            // console.log(req.body.start);
+            // console.log(req.body.length);
+            Community.find(query, '_id name rule location owner dateCreated image status', { skip: start, limit: length, sort: orderby }).populate('owner', '_id name').lean().exec(function (err, result) {
+                if (err) {
+                    // console.log('error while getting results' + err);
+                    //return;
+                    throw err;
+                }
+
+                var data = JSON.stringify({
+                    draw: req.body.draw,
+                    recordsFiltered: recordsFiltered,
+                    recordsTotal: recordsTotal,
+                    data: result
+                });
+                res.send(data);
+            });
+
+        });
+    });
+
+
+});
+
+app.post('/admin/updatecommunity', authenticate, function (req, res) {
+
+    var _id = req.body._id;
+    var name = req.body.name;
+    var status = req.body.status;
+ 
+    Community.findOneAndUpdate({ _id: _id }, { name: name, status: status }, function (err, result) {
+        if (err) throw err;
+        if (result) {
+        
+        return res.json({ success: "Community Update Success" });
+        
+    }
+    else {
+            return res.status(500).send({ error: 'Unable to update' });;
+        }
+
+    });
+
+
+});
+
+app.post('/admin/getcommunityinfo', authenticate, function (req, res) {
+
+    var _id = req.body._id;
+
+    Community.findOne({ _id: _id }, 'description', function (err, result) {
+        if (err) throw err;
+        if (result) {
+        
+        return res.json(result);
+        
+    }
+    else {
+            return res.status(500).send({ error: 'Unable to get info' });;
+        }
+
+    });
+
+
+});
+
+
 app.get('/changePassword', authenticate, function (req, res) {
 
     var invalidPassword;
@@ -937,7 +1071,7 @@ app.post('/community/removeuser', authenticate, function (req, res) {
         if (err) throw err;
 
         Community.updateOne({ _id: community_id }, {
-            $pull: { admins: user_id , members: user_id },
+            $pull: { admins: user_id, members: user_id },
         }, function (err) {
             if (err) throw err;
             return res.end();
