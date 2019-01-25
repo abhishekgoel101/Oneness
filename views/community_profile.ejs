@@ -233,8 +233,15 @@
       %>
       </div>
 
-        <div class="col-sm-12" id="needGlobalInProfile" style="padding:0">
+
+      <div style="display:none;" class="loading">
+      <center><img src="/loading.gif" /></center>
+      </div>
+
+
+        <div class="col-sm-12" id="GlobalInProfile" style="padding:0">
             <!--Here global will come-->
+
         </div>
     </div>
 </div>
@@ -245,14 +252,18 @@
 </div>
 </div>
 
-<script src="/Plugins/js/vibrant.js"></script>
+
 <script src="/javascripts/Common.js"></script>
 <script src="/Plugins/js/notie.min.js"></script>
+<script src="/javascripts/CommunityProfileDiscussion.js"></script>
+
+<!--
 <script src="/javascripts/helper/CommunityHelper.js"></script>
 <script src="/javascripts/helper/DScrapingApi.js"></script>
 <script src="/javascripts/helper/DiscussionHelper.js"></script>
 <script src="/javascripts/CommunityProfile.js"></script>
 <script src="/javascripts/DiscussionComments.js"></script>
+-->
 
 <script>
 var selector = '.nav li';
@@ -264,6 +275,9 @@ $('#community-panel-nav').addClass('active');
 
 var fullDesc=$('<div />').html("<%=community.description%>").text();
 $('.full-description').html(fullDesc);
+
+initProfileDiscussion("<%=community._id%>");
+
 
 function showHideDescription(mode)
 {
@@ -382,6 +396,7 @@ function leaveCommunity(user_id,community_id)
 }
 
 $(document).ready(function(){
+
 
 $('.joinBtn').on("click",function(){
 var mode=$(this).text();

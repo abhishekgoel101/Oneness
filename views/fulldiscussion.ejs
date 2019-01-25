@@ -1,0 +1,1107 @@
+<html>
+
+<div id="wrapper">
+
+    <div id="page-content-wrapper" style="padding:0;margin-top:60px">
+        <!--Margin Top is new-->
+        <div class="container-fluid page-content-div" style="padding:0">
+            <div class="row">
+                <div class="col-lg-12 scoll-possible" style="padding:0">
+
+
+                    <div class="container" style="width:90% !important">
+
+                    </div>
+
+                    <link rel="stylesheet" href="/stylesheets/Discussion.css">
+
+                    <div class="container discussion-input discussion-container">
+                        <div class="panel panel-default allSidesSoft" style="border-radius:0;border:1px solid rgb(182, 182, 182) !important;">
+                            <div class="panel-body" style="padding:5px;background:#f9f9f9;">
+                                <div class="col-sm-1 col-xs-3">
+                                    <a href="/community/communityprofile/5ba5b046393e737dbe66f5d4">
+                                        <img src="/Upload/CommunityProfile/1540508025687.jpeg" class="discussion-com-profile-pic allSidesSoft"
+                                            style="border:2px solid #fff">
+                                    </a>
+                                </div>
+                                <p class="col-sm-11 col-xs-9 discussion-heading">
+                                    Start a discussion
+                                </p>
+                            </div>
+                            <form method="POST" enctype="multipart/form-data" id="discussionPostForm">
+
+                                <div class="panel-body discussion-panel-body">
+                                    <div class="col-sm-12 col-xs-12" style="padding:0;border-top: 1px solid white;">
+                                        <input type="text" style="width:100%" class="discussion-input-title" name="title"
+                                            placeholder="Enter a discussion title....." id="discussion-title"
+                                            autocomplete="off" required="">
+                                    </div>
+                                </div>
+
+                                <div class="panel-body discussion-body">
+                                    <div class="col-sm-12 col-xs-12" style="padding:0;border-top: 1px solid white;">
+                                        <!--Textarea-->
+                                        <textarea class="discussion-body-textarea" name="details" placeholder="Enter discussion details"
+                                            id="discussion-details" autocomplete="off" required=""></textarea>
+                                        <!------------>
+                                    </div>
+
+                                    <div class="link-preview-main col-sm-12 col-xs-12">
+                                        <!-- preview here -->
+                                    </div>
+                                    <div class="tag-conatiner-custom-div">
+                                        <select id="tagEditor" name="tags" class="form-control input-sm select2-multiple select2-hidden-accessible"
+                                            style="width:100%" multiple="" tabindex="-1" aria-hidden="true">
+                                            <!--Tags option appended here-->
+                                            <option class="tagSuggestInput">festivals</option>
+                                            <option class="tagSuggestInput">gggg</option>
+                                            <option class="tagSuggestInput">github</option>
+                                            <option class="tagSuggestInput">hhh jj</option>
+                                            <option class="tagSuggestInput">india</option>
+                                            <option class="tagSuggestInput">investment</option>
+                                            <option class="tagSuggestInput">management</option>
+                                            <option class="tagSuggestInput">manisha</option>
+                                            <option class="tagSuggestInput">money</option>
+                                            <option class="tagSuggestInput">nodejs</option>
+                                            <option class="tagSuggestInput">oneness</option>
+                                            <option class="tagSuggestInput">oooo</option>
+                                            <option class="tagSuggestInput">tag1</option>
+                                            <option class="tagSuggestInput">testing</option>
+                                            <option class="tagSuggestInput">world</option>
+                                            <option class="tagSuggestInput">apple</option>
+                                            <option class="tagSuggestInput">economy</option>
+                                            <option class="tagSuggestInput">hello</option>
+                                            <option class="tagSuggestInput">jjjjj</option>
+                                            <option class="tagSuggestInput">latest</option>
+                                            <option class="tagSuggestInput">latest_technology</option>
+                                            <option class="tagSuggestInput">new</option>
+                                            <option class="tagSuggestInput">news</option>
+                                            <option class="tagSuggestInput">python</option>
+                                            <option class="tagSuggestInput">tags</option>
+                                            <option class="tagSuggestInput">technology</option>
+                                            <option class="tagSuggestInput">you-tube</option>
+                                            <option class="tagSuggestInput">youtube</option>
+                                        </select><span class="select2 select2-container select2-container--bootstrap"
+                                            dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple form-control input-sm"
+                                                    role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                                                    <ul class="select2-selection__rendered">
+                                                        <li class="select2-search select2-search--inline"><input class="select2-search__field"
+                                                                type="search" tabindex="0" autocomplete="off"
+                                                                autocorrect="off" autocapitalize="off" spellcheck="false"
+                                                                role="textbox" aria-autocomplete="list" placeholder="Enter tag..."
+                                                                style="width: 100%;"></li>
+                                                    </ul>
+                                                </span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+
+                                    <div class="image-preview-main col-sm-12 col-xs-12">
+                                        <center>
+                                            <img src="" class="allSides preview-image" id="previewImage">
+                                        </center>
+                                    </div>
+                                    <input type="file" class="discussion-file-btn" name="discussionImageFile" id="discussionImageFile"
+                                        accept="image/x-png,image/gif,image/jpeg">
+                                    <div class="col-sm-12 col-xs-12" style="padding:0;">
+                                        <a class="discussion-image-btn" id="discussionImageClickBtn"><i class="fa fa-image"></i></a>
+                                        <a id="closeImgPreviewBtn"><i class="fa fa-window-close"></i></a>
+                                        <button class="btn btn-primary" type="submit" style="float:right" id="discussion-post">
+                                            <p class="discussion-post-btn-txt">Post</p>
+                                            <i class="fas fa-spinner discussion-post-spinner infinite-rotation"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="panel-footer"></div>
+                        </div>
+                    </div>
+
+
+                    <div id="FeaturedParentDiv">
+                        <!--Discussions-->
+                        <div class="container discussion-container featuredContainer" id="5bd7190a2880d33b97da265a">
+                            <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5bd7190a2880d33b97da265a"><span
+                                    class="badge featured-label" id="featured5bd7190a2880d33b97da265a">Featured</span><span
+                                    class="badge global-label" id="global5bd7190a2880d33b97da265a">Global</span>
+                                <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important"
+                                        aria-expanded="false"> <i class="fa fa-ellipsis-h"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                        <li><a class="request-dropdown-options" onclick="deleteDiscussion('5bd7190a2880d33b97da265a')">Delete</a></li>
+                                        <li id="featuredBtnLi5bd7190a2880d33b97da265a"> <a class="request-dropdown-options"
+                                                onclick="toggleFeature('5bd7190a2880d33b97da265a',0)" id="featuredBtn5bd7190a2880d33b97da265a">Unfeature</a>
+                                        </li>
+                                        <li id="globalBtnLi5bd7190a2880d33b97da265a"> <a class="request-dropdown-options"
+                                                onclick="toggleGlobal('5bd7190a2880d33b97da265a',0)" id="globalBtn5bd7190a2880d33b97da265a">Unpublish
+                                                to oneness</a> </li>
+                                    </ul>
+                                </div>
+                                <div class="panel-body" style="padding:0;padding-top:10px">
+                                    <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                            href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5bd7190a2880d33b97da265a"
+                                            target="_blank">Python</a> </div>
+                                    <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by
+                                        <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun Goyat</a> on Oct 29
+                                        2018 </div>
+                                </div>
+                                <div class="panel-body" style="padding:0">
+                                    <div class="col-sm-12 col-xs-12 tagMainDiv" style="border-top: 1px solid white;padding:0">
+                                        <div class="col-sm-12"><span class="tag-still">Python</span> </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body" style="padding:0;padding-top:10px;">
+                                    <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">http://projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4/
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div id="discussionLinkPreview5bd7190a2880d33b97da265a">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0;border-top: 1px solid white;cursor:pointer">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 allSidesSoft link-preview-outer-div"><a
+                                                    href="http://projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4"
+                                                    target="_blank">
+                                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  center-all link-preview-image"
+                                                        alt="projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4"
+                                                        style="background: url(/Upload/UrlImage/projects.skylogic.ca__slash__blog__slash__wp-content__slash__uploads__slash__2015__slash__06__slash__QtDesigner-withHeading.png.png) no-repeat center,#cdcdcd !important">
+                                                        <div class="auto-resize-image-main-div"> <img src="/Upload/UrlImage/projects.skylogic.ca__slash__blog__slash__wp-content__slash__uploads__slash__2015__slash__06__slash__QtDesigner-withHeading.png.png"
+                                                                class="link-preview-thumb-img"> </div>
+                                                    </div>
+                                                </a>
+                                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 link-preview-content url-container-body">
+                                                    <div class="col-sm-12" style="padding:5px 0 0 0;"> <a class="site-title pc"
+                                                            href="http://projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4"
+                                                            target="_blank">How to Install PyQt5 and Build Your
+                                                            First GUI in Python 3.4 </a> <a class="site-title mobile"
+                                                            href="http://projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4"
+                                                            target="_blank">How to Install PyQt5 and Build Your
+                                                            First GUI in Python 3.4 </a> </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pc" style="padding:5px 0 5px 0;">
+                                                        <a class="site-name" href="http://projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4"
+                                                            target="_blank">projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4
+                                                        </a> </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mobile" style="padding:5px 0 5px 0;bottom:0">
+                                                        <a class="site-name" href="http://projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4"
+                                                            target="_blank">projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4
+                                                        </a> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body" style="padding:0;padding-top:10px;">
+                                    <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                            onclick="showCommentsAction('5bd7190a2880d33b97da265a',0)" id="showComments5bd7190a2880d33b97da265a">
+                                            <i class="fa fa-comment-alt"></i> 3 <mobilenone>comments</mobilenone>
+                                        </a><a class="show-comment-btn show-hide-comments comment-btn-discussion"
+                                            onclick="hideCommentsAction('5bd7190a2880d33b97da265a')" id="ShowHideComments5bd7190a2880d33b97da265a"
+                                            style="visibility: visible;">Hide</a> </div>
+                                </div> <br>
+                                <ul class="panel-body all-comments-box" id="allCommentsContainer5bd7190a2880d33b97da265a"
+                                    style="display: block;">
+                                    <li class="col-sm-12 col-xs-12 comment-li comment-box" id="commentLi5c4ab89b1d56ef1b54f98ce1">
+                                        <div class="col-sm-1 col-xs-2"> <img src="/Upload/Profile/default.png" class="comment-by-pic">
+                                        </div>
+                                        <div class="col-sm-10 col-xs-10">
+                                            <div class="comment-container"> <a href="/viewprofile/5ba5ace5393e737dbe66f5cb"
+                                                    class="comment-by-user-name">Arun Goyat</a> <span class="dis-comment-time">12:49
+                                                    PM</span><i class="fa fa-trash commentOptionButton delComOwner"
+                                                    onclick="deleteDisComment('5bd7190a2880d33b97da265a','5c4ab89b1d56ef1b54f98ce1','5bd7190a2880d33b97da265a')"></i><a
+                                                    class="show-reply-btn fa fa-reply commentOptionButton" onclick="ChildReplyInputOrShowReply('5bd7190a2880d33b97da265a','5c4ab89b1d56ef1b54f98ce1')"
+                                                    id="showChildComments5c4ab89b1d56ef1b54f98ce1"> (0)</a>
+                                                <p class="comment-div">hhhh </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 col-xs-10 col-sm-push-1 col-xs-push-2" id="child-reply5c4ab89b1d56ef1b54f98ce1"></div>
+                                        <div class="col-sm-8 col-xs-8 col-sm-push-2 col-xs-push-3 input-group child-reply-input"
+                                            id="childReply5c4ab89b1d56ef1b54f98ce1" style="display: none;">
+                                            <div class="col-sm-12"><textarea type="text" autocomplete="off" class="form-control input-sm comment-textarea"
+                                                    id="textareaChild5c4ab89b1d56ef1b54f98ce1" placeholder="reply to this comment..."
+                                                    maxlength="1500" style="width:100%"></textarea></div>
+                                            <div class="col-sm-12 center-all"> <button class="btn btn-primary btn-sm post-discussion-btn"
+                                                    onclick="postChildComment('5bd7190a2880d33b97da265a','5c4ab89b1d56ef1b54f98ce1')"
+                                                    style="border-radius:0;margin-top:2px;width:100%">Reply</button></div>
+                                        </div>
+                                    </li>
+                                    <li class="col-sm-12 col-xs-12 comment-li comment-box" id="commentLi5c4ab9841d56ef1b54f98ce2">
+                                        <div class="col-sm-1 col-xs-2"> <img src="/Upload/Profile/1537585361461.jpeg"
+                                                class="comment-by-pic"> </div>
+                                        <div class="col-sm-10 col-xs-10">
+                                            <div class="comment-container"> <a href="/viewprofile/5ba5acd0393e737dbe66f5ca"
+                                                    class="comment-by-user-name">Puneet Goyal</a> <span class="dis-comment-time">12:53
+                                                    PM</span><i class="fa fa-trash commentOptionButton delComOwner"
+                                                    onclick="deleteDisComment('5bd7190a2880d33b97da265a','5c4ab9841d56ef1b54f98ce2','5bd7190a2880d33b97da265a')"></i><a
+                                                    class="show-reply-btn fa fa-reply commentOptionButton" onclick="ChildReplyInputOrShowReply('5bd7190a2880d33b97da265a','5c4ab9841d56ef1b54f98ce2')"
+                                                    id="showChildComments5c4ab9841d56ef1b54f98ce2"> (0)</a>
+                                                <p class="comment-div">Okay </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 col-xs-10 col-sm-push-1 col-xs-push-2" id="child-reply5c4ab9841d56ef1b54f98ce2">
+                                    <li class="col-sm-12 col-xs-12 comment-child-li comment-box child5c4ab9841d56ef1b54f98ce2"
+                                        id="commentLi5c4abcec1d56ef1b54f98ce5">
+                                        <div class="col-sm-1 col-xs-2"> <img src="/Upload/Profile/default.png" class="comment-by-pic-child">
+                                        </div>
+                                        <div class="col-sm-10 col-xs-10">
+                                            <div class="comment-container"> <a href="/viewprofile/5ba5ace5393e737dbe66f5cb"
+                                                    class="comment-by-user-name">Arun Goyat</a> <span class="dis-comment-time">1:08
+                                                    PM</span><i class="fa fa-trash commentOptionButton delComOwner"
+                                                    onclick="deleteDisComment('5bd7190a2880d33b97da265a','5c4abcec1d56ef1b54f98ce5','5c4ab9841d56ef1b54f98ce2')"></i>
+                                                <p class="comment-div-child">fine </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                            </div>
+                            <div class="col-sm-8 col-xs-8 col-sm-push-2 col-xs-push-3 input-group child-reply-input" id="childReply5c4ab9841d56ef1b54f98ce2"
+                                style="display: table;">
+                                <div class="col-sm-12"><textarea type="text" autocomplete="off" class="form-control input-sm comment-textarea"
+                                        id="textareaChild5c4ab9841d56ef1b54f98ce2" placeholder="reply to Puneet Goyal"
+                                        maxlength="1500" style="width:100%"></textarea></div>
+                                <div class="col-sm-12 center-all"> <button class="btn btn-primary btn-sm post-discussion-btn"
+                                        onclick="postChildComment('5bd7190a2880d33b97da265a','5c4ab9841d56ef1b54f98ce2')"
+                                        style="border-radius:0;margin-top:2px;width:100%">Reply</button></div>
+                            </div>
+                            </li>
+                            <li class="col-sm-12 col-xs-12 comment-li comment-box" id="commentLi5c4aba111d56ef1b54f98ce3">
+                                <div class="col-sm-1 col-xs-2"> <img src="/Upload/Profile/1537585361461.jpeg" class="comment-by-pic">
+                                </div>
+                                <div class="col-sm-10 col-xs-10">
+                                    <div class="comment-container"> <a href="/viewprofile/5ba5acd0393e737dbe66f5ca"
+                                            class="comment-by-user-name">Puneet Goyal</a> <span class="dis-comment-time">12:56
+                                            PM</span><i class="fa fa-trash commentOptionButton delComOwner" onclick="deleteDisComment('5bd7190a2880d33b97da265a','5c4aba111d56ef1b54f98ce3','5bd7190a2880d33b97da265a')"></i><a
+                                            class="show-reply-btn fa fa-reply commentOptionButton" onclick="ChildReplyInputOrShowReply('5bd7190a2880d33b97da265a','5c4aba111d56ef1b54f98ce3')"
+                                            id="showChildComments5c4aba111d56ef1b54f98ce3"> (0)</a>
+                                        <p class="comment-div">Hohhha </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 col-xs-10 col-sm-push-1 col-xs-push-2" id="child-reply5c4aba111d56ef1b54f98ce3"></div>
+                                <div class="col-sm-8 col-xs-8 col-sm-push-2 col-xs-push-3 input-group child-reply-input"
+                                    id="childReply5c4aba111d56ef1b54f98ce3" style="display: none;">
+                                    <div class="col-sm-12"><textarea type="text" autocomplete="off" class="form-control input-sm comment-textarea"
+                                            id="textareaChild5c4aba111d56ef1b54f98ce3" placeholder="reply to Puneet Goyal"
+                                            maxlength="1500" style="width:100%"></textarea></div>
+                                    <div class="col-sm-12 center-all"> <button class="btn btn-primary btn-sm post-discussion-btn"
+                                            onclick="postChildComment('5bd7190a2880d33b97da265a','5c4aba111d56ef1b54f98ce3')"
+                                            style="border-radius:0;margin-top:2px;width:100%">Reply</button></div>
+                                </div>
+                            </li>
+                            </ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid rgb(223, 223, 223); display: inline;" id="composeCommentDiv5bd7190a2880d33b97da265a">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5bd7190a2880d33b97da265a"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5bd7190a2880d33b97da265a')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container featuredContainer" id="5bd24a1b3b49fe79dae79d80">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5bd24a1b3b49fe79dae79d80"><span
+                                class="badge featured-label" id="featured5bd24a1b3b49fe79dae79d80">Featured</span><span
+                                class="badge global-label" id="global5bd24a1b3b49fe79dae79d80">Global</span>
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5bd24a1b3b49fe79dae79d80')">Delete</a></li>
+                                    <li id="featuredBtnLi5bd24a1b3b49fe79dae79d80"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5bd24a1b3b49fe79dae79d80',0)" id="featuredBtn5bd24a1b3b49fe79dae79d80">Unfeature</a>
+                                    </li>
+                                    <li id="globalBtnLi5bd24a1b3b49fe79dae79d80"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5bd24a1b3b49fe79dae79d80',0)" id="globalBtn5bd24a1b3b49fe79dae79d80">Unpublish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5bd24a1b3b49fe79dae79d80"
+                                        target="_blank">Cash crunch in financial markets worsens further</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun
+                                        Goyat</a> on Oct 26 2018
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0">
+                                <div class="col-sm-12 col-xs-12 tagMainDiv" style="border-top: 1px solid white;padding:0">
+                                    <div class="col-sm-12"><span class="tag-still">Finance</span><span class="tag-still">Economy</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">https://m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div id="discussionLinkPreview5bd24a1b3b49fe79dae79d80">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0;border-top: 1px solid white;cursor:pointer">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 allSidesSoft link-preview-outer-div"><a
+                                                href="http://m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms"
+                                                target="_blank">
+                                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  center-all link-preview-image"
+                                                    alt="m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms"
+                                                    style="background: url(https://img.etimg.com/thumb/msid-66356141,width-1070,height-580,imgsize-1067563,overlay-economictimes/photo.jpg) no-repeat center,#cdcdcd !important">
+                                                    <div class="auto-resize-image-main-div"> <img src="https://img.etimg.com/thumb/msid-66356141,width-1070,height-580,imgsize-1067563,overlay-economictimes/photo.jpg"
+                                                            class="link-preview-thumb-img"> </div>
+                                                </div>
+                                            </a>
+                                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 link-preview-content url-container-body">
+                                                <div class="col-sm-12" style="padding:5px 0 0 0;"> <a class="site-title pc"
+                                                        href="http://m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms"
+                                                        target="_blank">Cash crunch in financial markets worsens
+                                                        further..... </a> <a class="site-title mobile" href="http://m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms"
+                                                        target="_blank">Cash crunch in financial markets worsens
+                                                        further </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:5px 0 5px 0;word-wrap: break-word;">
+                                                    <a href="http://m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms"
+                                                        target="_blank" style="word-wrap: break-word;color:black">Market
+                                                        worries over finance firms ability to roll over their debt
+                                                        and surging demand for cash as festival season purchases
+                                                        gather pace has also compounded the proble </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pc" style="padding:5px 0 5px 0;">
+                                                    <a class="site-name" href="http://m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms"
+                                                        target="_blank">m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms
+                                                    </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mobile" style="padding:5px 0 5px 0;bottom:0">
+                                                    <a class="site-name" href="http://m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms"
+                                                        target="_blank">m.economictimes.com/news/economy/finance/cash-crunch-in-financial-markets-worsens-further/articleshow/66356138.cms
+                                                    </a> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5bd24a1b3b49fe79dae79d80',0)" id="showComments5bd24a1b3b49fe79dae79d80">
+                                        <i class="fa fa-comment-alt"></i> 0 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5bd24a1b3b49fe79dae79d80')"
+                                        id="ShowHideComments5bd24a1b3b49fe79dae79d80" style="visibility: hidden;">Hide</a>
+                                </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5bd24a1b3b49fe79dae79d80"
+                                style="display: none;"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5bd24a1b3b49fe79dae79d80">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5bd24a1b3b49fe79dae79d80"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5bd24a1b3b49fe79dae79d80')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container featuredContainer" id="5bc215accea94874e382a57b">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5bc215accea94874e382a57b"><span
+                                class="badge featured-label" id="featured5bc215accea94874e382a57b">Featured</span>
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5bc215accea94874e382a57b')">Delete</a></li>
+                                    <li id="featuredBtnLi5bc215accea94874e382a57b"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5bc215accea94874e382a57b',0)" id="featuredBtn5bc215accea94874e382a57b">Unfeature</a>
+                                    </li>
+                                    <li id="globalBtnLi5bc215accea94874e382a57b"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5bc215accea94874e382a57b',1)" id="globalBtn5bc215accea94874e382a57b">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5bc215accea94874e382a57b"
+                                        target="_blank">testing</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun
+                                        Goyat</a> on Oct 13 2018
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0">
+                                <div class="col-sm-12 col-xs-12 tagMainDiv" style="border-top: 1px solid white;padding:0">
+                                    <div class="col-sm-12"><span class="tag-still">tags</span><span class="tag-still">new</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">testing
+                                    tag feature </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5bc215accea94874e382a57b',0)" id="showComments5bc215accea94874e382a57b">
+                                        <i class="fa fa-comment-alt"></i> 0 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5bc215accea94874e382a57b')"
+                                        id="ShowHideComments5bc215accea94874e382a57b" style="visibility: hidden;">Hide</a>
+                                </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5bc215accea94874e382a57b"
+                                style="display: none;"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5bc215accea94874e382a57b">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5bc215accea94874e382a57b"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5bc215accea94874e382a57b')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container featuredContainer" id="5bbc1c797d61c8504556d6d3">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5bbc1c797d61c8504556d6d3"><span
+                                class="badge featured-label" id="featured5bbc1c797d61c8504556d6d3">Featured</span>
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5bbc1c797d61c8504556d6d3')">Delete</a></li>
+                                    <li id="featuredBtnLi5bbc1c797d61c8504556d6d3"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5bbc1c797d61c8504556d6d3',0)" id="featuredBtn5bbc1c797d61c8504556d6d3">Unfeature</a>
+                                    </li>
+                                    <li id="globalBtnLi5bbc1c797d61c8504556d6d3"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5bbc1c797d61c8504556d6d3',1)" id="globalBtn5bbc1c797d61c8504556d6d3">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5bbc1c797d61c8504556d6d3"
+                                        target="_blank">Python Full Tutorial</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun
+                                        Goyat</a> on Oct 09 2018
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">https://www.youtube.com/watch?v=rfscVS0vtbw
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div id="discussionLinkPreview5bbc1c797d61c8504556d6d3">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0;border-top: 1px solid white;cursor:pointer">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 allSidesSoft link-preview-outer-div">
+                                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 link-preview-image-div-added center-all link-preview-image"
+                                                alt="www.youtube.com/watch?v=rfscVS0vtbw" style="background: url(https://i.ytimg.com/vi/rfscVS0vtbw/maxresdefault.jpg) no-repeat center,#cdcdcd !important"><a
+                                                    class="video-btn-onlink-image"><i class="fas fa-play-circle"></i></a>
+                                                <div class="auto-resize-image-main-div"> <img src="https://i.ytimg.com/vi/rfscVS0vtbw/maxresdefault.jpg"
+                                                        class="link-preview-thumb-img"> </div>
+                                            </div>
+                                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 link-preview-content url-container-body">
+                                                <div class="col-sm-12" style="padding:5px 0 0 0;"> <a class="site-title pc"
+                                                        href="http://www.youtube.com/watch?v=rfscVS0vtbw" target="_blank">Learn
+                                                        Python - Full Course for Beginners..... </a> <a class="site-title mobile"
+                                                        href="http://www.youtube.com/watch?v=rfscVS0vtbw" target="_blank">Learn
+                                                        Python - Full Course for Beginners </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:5px 0 5px 0;word-wrap: break-word;">
+                                                    <a href="http://www.youtube.com/watch?v=rfscVS0vtbw" target="_blank"
+                                                        style="word-wrap: break-word;color:black">This course will
+                                                        give you a full introduction into all of the core concepts
+                                                        in python. Follow along with the videos and you'll be a
+                                                        python programmer in no t... </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pc" style="padding:5px 0 5px 0;">
+                                                    <a class="site-name" href="http://www.youtube.com/watch?v=rfscVS0vtbw"
+                                                        target="_blank">www.youtube.com/watch?v=rfscVS0vtbw </a>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mobile" style="padding:5px 0 5px 0;bottom:0">
+                                                    <a class="site-name" href="http://www.youtube.com/watch?v=rfscVS0vtbw"
+                                                        target="_blank">www.youtube.com/watch?v=rfscVS0vtbw </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5bbc1c797d61c8504556d6d3',0)" id="showComments5bbc1c797d61c8504556d6d3">
+                                        <i class="fa fa-comment-alt"></i> 0 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5bbc1c797d61c8504556d6d3')"
+                                        id="ShowHideComments5bbc1c797d61c8504556d6d3" style="visibility: hidden;">Hide</a>
+                                </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5bbc1c797d61c8504556d6d3"
+                                style="display: none;"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5bbc1c797d61c8504556d6d3">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5bbc1c797d61c8504556d6d3"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5bbc1c797d61c8504556d6d3')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="discussionsList">
+                    <!--Discussions-->
+                    <div class="container discussion-container " id="5c2bcac16992046a9ffe6d8e">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5c2bcac16992046a9ffe6d8e">
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5c2bcac16992046a9ffe6d8e')">Delete</a></li>
+                                    <li id="featuredBtnLi5c2bcac16992046a9ffe6d8e"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5c2bcac16992046a9ffe6d8e',1)" id="featuredBtn5c2bcac16992046a9ffe6d8e">Feature</a>
+                                    </li>
+                                    <li id="globalBtnLi5c2bcac16992046a9ffe6d8e"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5c2bcac16992046a9ffe6d8e',1)" id="globalBtn5c2bcac16992046a9ffe6d8e">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5c2bcac16992046a9ffe6d8e"
+                                        target="_blank">cas</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5c208cbe6992046a9ffe6d67">nmcfcnm</a>
+                                    on Jan 02 2019
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">xsiallojlk
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5c2bcac16992046a9ffe6d8e',0)" id="showComments5c2bcac16992046a9ffe6d8e">
+                                        <i class="fa fa-comment-alt"></i> 3 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5c2bcac16992046a9ffe6d8e')"
+                                        id="ShowHideComments5c2bcac16992046a9ffe6d8e" style="visibility: hidden;">Hide</a>
+                                </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5c2bcac16992046a9ffe6d8e"
+                                style="display: none;"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5c2bcac16992046a9ffe6d8e">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5c2bcac16992046a9ffe6d8e"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5c2bcac16992046a9ffe6d8e')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container " id="5c2bcab26992046a9ffe6d8d">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5c2bcab26992046a9ffe6d8d">
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5c2bcab26992046a9ffe6d8d')">Delete</a></li>
+                                    <li id="featuredBtnLi5c2bcab26992046a9ffe6d8d"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5c2bcab26992046a9ffe6d8d',1)" id="featuredBtn5c2bcab26992046a9ffe6d8d">Feature</a>
+                                    </li>
+                                    <li id="globalBtnLi5c2bcab26992046a9ffe6d8d"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5c2bcab26992046a9ffe6d8d',1)" id="globalBtn5c2bcab26992046a9ffe6d8d">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5c2bcab26992046a9ffe6d8d"
+                                        target="_blank">soxslkam</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5c208cbe6992046a9ffe6d67">nmcfcnm</a>
+                                    on Jan 02 2019
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">oklmsalakmc
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="discussionImageDiv" id="discussionImageDiv5c2bcab26992046a9ffe6d8d"><img
+                                        src="/Upload/DiscussionImages/discussion_image1546373810371.jpg" class="allSides show-discussion-image">
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5c2bcab26992046a9ffe6d8d',0)" id="showComments5c2bcab26992046a9ffe6d8d">
+                                        <i class="fa fa-comment-alt"></i> 0 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5c2bcab26992046a9ffe6d8d')"
+                                        id="ShowHideComments5c2bcab26992046a9ffe6d8d" style="visibility: hidden;">Hide</a>
+                                </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5c2bcab26992046a9ffe6d8d"
+                                style="display: none;"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5c2bcab26992046a9ffe6d8d">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5c2bcab26992046a9ffe6d8d"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5c2bcab26992046a9ffe6d8d')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container " id="5c2bab5a6992046a9ffe6d88">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5c2bab5a6992046a9ffe6d88">
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5c2bab5a6992046a9ffe6d88')">Delete</a></li>
+                                    <li id="featuredBtnLi5c2bab5a6992046a9ffe6d88"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5c2bab5a6992046a9ffe6d88',1)" id="featuredBtn5c2bab5a6992046a9ffe6d88">Feature</a>
+                                    </li>
+                                    <li id="globalBtnLi5c2bab5a6992046a9ffe6d88"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5c2bab5a6992046a9ffe6d88',1)" id="globalBtn5c2bab5a6992046a9ffe6d88">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5c2bab5a6992046a9ffe6d88"
+                                        target="_blank">wuod</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5c208cbe6992046a9ffe6d67">nmcfcnm</a>
+                                    on Jan 01 2019
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">olkmdq
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5c2bab5a6992046a9ffe6d88',0)" id="showComments5c2bab5a6992046a9ffe6d88">
+                                        <i class="fa fa-comment-alt"></i> 0 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5c2bab5a6992046a9ffe6d88')"
+                                        id="ShowHideComments5c2bab5a6992046a9ffe6d88" style="visibility: hidden;">Hide</a>
+                                </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5c2bab5a6992046a9ffe6d88"
+                                style="display: none;"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5c2bab5a6992046a9ffe6d88">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5c2bab5a6992046a9ffe6d88"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5c2bab5a6992046a9ffe6d88')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container " id="5c207e0c6992046a9ffe6d4e">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5c207e0c6992046a9ffe6d4e">
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5c207e0c6992046a9ffe6d4e')">Delete</a></li>
+                                    <li id="featuredBtnLi5c207e0c6992046a9ffe6d4e"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5c207e0c6992046a9ffe6d4e',1)" id="featuredBtn5c207e0c6992046a9ffe6d4e">Feature</a>
+                                    </li>
+                                    <li id="globalBtnLi5c207e0c6992046a9ffe6d4e"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5c207e0c6992046a9ffe6d4e',1)" id="globalBtn5c207e0c6992046a9ffe6d4e">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5c207e0c6992046a9ffe6d4e"
+                                        target="_blank">Random</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun
+                                        Goyat</a> on Dec 24 2018
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">
+                                    <script>console.log("xss")</script>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div id="discussionLinkPreview5c207e0c6992046a9ffe6d4e">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0;border-top: 1px solid white;cursor:pointer">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 allSidesSoft link-preview-outer-div">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pc" style="padding:5px 0 5px 0;">
+                                                <a class="site-name" href="http://console.log" target="_blank">console.log
+                                                </a> </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mobile" style="padding:5px 0 5px 0;bottom:0">
+                                                <a class="site-name" href="http://console.log" target="_blank">console.log
+                                                </a> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5c207e0c6992046a9ffe6d4e',0)" id="showComments5c207e0c6992046a9ffe6d4e">
+                                        <i class="fa fa-comment-alt"></i>
+                                        0 <mobilenone>comments</mobilenone> </a><a class="show-comment-btn show-hide-comments comment-btn-discussion"
+                                        onclick="hideCommentsAction('5c207e0c6992046a9ffe6d4e')" id="ShowHideComments5c207e0c6992046a9ffe6d4e">Hide</a>
+                                </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5c207e0c6992046a9ffe6d4e"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5c207e0c6992046a9ffe6d4e">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5c207e0c6992046a9ffe6d4e"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5c207e0c6992046a9ffe6d4e')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container " id="5bd5aa4e0b7fb555484372df">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5bd5aa4e0b7fb555484372df"><span
+                                class="badge global-label" id="global5bd5aa4e0b7fb555484372df">Global</span>
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5bd5aa4e0b7fb555484372df')">Delete</a></li>
+                                    <li id="featuredBtnLi5bd5aa4e0b7fb555484372df"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5bd5aa4e0b7fb555484372df',1)" id="featuredBtn5bd5aa4e0b7fb555484372df">Feature</a>
+                                    </li>
+                                    <li id="globalBtnLi5bd5aa4e0b7fb555484372df"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5bd5aa4e0b7fb555484372df',0)" id="globalBtn5bd5aa4e0b7fb555484372df">Unpublish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5bd5aa4e0b7fb555484372df"
+                                        target="_blank">For Testing</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun
+                                        Goyat</a> on Oct 28 2018
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0">
+                                <div class="col-sm-12 col-xs-12 tagMainDiv" style="border-top: 1px solid white;padding:0">
+                                    <div class="col-sm-12"><span class="tag-still">testing</span> </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">testing
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5bd5aa4e0b7fb555484372df',0)" id="showComments5bd5aa4e0b7fb555484372df">
+                                        <i class="fa fa-comment-alt"></i> 0 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5bd5aa4e0b7fb555484372df')"
+                                        id="ShowHideComments5bd5aa4e0b7fb555484372df">Hide</a> </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5bd5aa4e0b7fb555484372df"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5bd5aa4e0b7fb555484372df">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5bd5aa4e0b7fb555484372df"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5bd5aa4e0b7fb555484372df')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container " id="5bcf5203733e6f69481bedc9">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5bcf5203733e6f69481bedc9">
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5bcf5203733e6f69481bedc9')">Delete</a></li>
+                                    <li id="featuredBtnLi5bcf5203733e6f69481bedc9"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5bcf5203733e6f69481bedc9',1)" id="featuredBtn5bcf5203733e6f69481bedc9">Feature</a>
+                                    </li>
+                                    <li id="globalBtnLi5bcf5203733e6f69481bedc9"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5bcf5203733e6f69481bedc9',1)" id="globalBtn5bcf5203733e6f69481bedc9">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5bcf5203733e6f69481bedc9"
+                                        target="_blank">Testing new</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun
+                                        Goyat</a> on Oct 23 2018
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">Its
+                                    for testing </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5bcf5203733e6f69481bedc9',0)" id="showComments5bcf5203733e6f69481bedc9">
+                                        <i class="fa fa-comment-alt"></i> 1 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5bcf5203733e6f69481bedc9')"
+                                        id="ShowHideComments5bcf5203733e6f69481bedc9">Hide</a> </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5bcf5203733e6f69481bedc9"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5bcf5203733e6f69481bedc9">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5bcf5203733e6f69481bedc9"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5bcf5203733e6f69481bedc9')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container " id="5bcc592b792470785e36bd37">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5bcc592b792470785e36bd37">
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5bcc592b792470785e36bd37')">Delete</a></li>
+                                    <li id="featuredBtnLi5bcc592b792470785e36bd37"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5bcc592b792470785e36bd37',1)" id="featuredBtn5bcc592b792470785e36bd37">Feature</a>
+                                    </li>
+                                    <li id="globalBtnLi5bcc592b792470785e36bd37"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5bcc592b792470785e36bd37',1)" id="globalBtn5bcc592b792470785e36bd37">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5bcc592b792470785e36bd37"
+                                        target="_blank">BitBucket</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun
+                                        Goyat</a> on Oct 21 2018
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">https://bit.ly/1yQ07QA
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div id="discussionLinkPreview5bcc592b792470785e36bd37">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0;border-top: 1px solid white;cursor:pointer">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 allSidesSoft link-preview-outer-div"><a
+                                                href="http://bit.ly/1yQ07QA" target="_blank">
+                                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  center-all link-preview-image"
+                                                    alt="bit.ly/1yQ07QA" style="background: url(https://bitbucket-marketing-cdn.atlassian.com/dam/jcr:e75ffb0e-b3ee-40ca-8659-ecb93675a379/Bitbucket@2x-blue.png) no-repeat center,#cdcdcd !important">
+                                                    <div class="auto-resize-image-main-div"> <img src="https://bitbucket-marketing-cdn.atlassian.com/dam/jcr:e75ffb0e-b3ee-40ca-8659-ecb93675a379/Bitbucket@2x-blue.png"
+                                                            class="link-preview-thumb-img"> </div>
+                                                </div>
+                                            </a>
+                                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 link-preview-content url-container-body">
+                                                <div class="col-sm-12" style="padding:5px 0 0 0;"> <a class="site-title pc"
+                                                        href="http://bit.ly/1yQ07QA" target="_blank">Bitbucket |
+                                                        The Git solution for professional teams </a> <a class="site-title mobile"
+                                                        href="http://bit.ly/1yQ07QA" target="_blank">Bitbucket |
+                                                        The Git solution for professional teams </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:5px 0 5px 0;word-wrap: break-word;">
+                                                    <a href="http://bit.ly/1yQ07QA" target="_blank" style="word-wrap: break-word;color:black">Collaborate
+                                                        on code with inline comments and pull requests. Manage and
+                                                        share your Git repositories to build and ship software, as
+                                                        a team. </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pc" style="padding:5px 0 5px 0;">
+                                                    <a class="site-name" href="http://bit.ly/1yQ07QA" target="_blank">bit.ly/1yQ07QA
+                                                    </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mobile" style="padding:5px 0 5px 0;bottom:0">
+                                                    <a class="site-name" href="http://bit.ly/1yQ07QA" target="_blank">bit.ly/1yQ07QA
+                                                    </a> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5bcc592b792470785e36bd37',0)" id="showComments5bcc592b792470785e36bd37">
+                                        <i class="fa fa-comment-alt"></i> 0 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5bcc592b792470785e36bd37')"
+                                        id="ShowHideComments5bcc592b792470785e36bd37">Hide</a> </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5bcc592b792470785e36bd37"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5bcc592b792470785e36bd37">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5bcc592b792470785e36bd37"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5bcc592b792470785e36bd37')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container discussion-container " id="5bb8b8c3f2052e66cace1834">
+                        <div class="panel panel-default allSidesSoft" style="background:white;" id="panel-default5bb8b8c3f2052e66cace1834">
+                            <div class="dropup"> <a class="discussion-dropdown-menu" data-toggle="dropdown" style="float:right !important">
+                                    <i class="fa fa-ellipsis-h"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-discussion">
+                                    <li><a class="request-dropdown-options" onclick="deleteDiscussion('5bb8b8c3f2052e66cace1834')">Delete</a></li>
+                                    <li id="featuredBtnLi5bb8b8c3f2052e66cace1834"> <a class="request-dropdown-options"
+                                            onclick="toggleFeature('5bb8b8c3f2052e66cace1834',1)" id="featuredBtn5bb8b8c3f2052e66cace1834">Feature</a>
+                                    </li>
+                                    <li id="globalBtnLi5bb8b8c3f2052e66cace1834"> <a class="request-dropdown-options"
+                                            onclick="toggleGlobal('5bb8b8c3f2052e66cace1834',1)" id="globalBtn5bb8b8c3f2052e66cace1834">Publish
+                                            to oneness</a> </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-title"> <a class="discussion-title"
+                                        href="/community/selecteddiscussion/5ba5b046393e737dbe66f5d4/5bb8b8c3f2052e66cace1834"
+                                        target="_blank">YouTub Testing</a> </div>
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-head"> posted by <a href="/viewprofile/5ba5ace5393e737dbe66f5cb">Arun
+                                        Goyat</a> on Oct 06 2018
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 discussion-content" style="font-size:16px">https://www.youtube.com/watch?v=dIlmtkRZK8g
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div id="discussionLinkPreview5bb8b8c3f2052e66cace1834">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0;border-top: 1px solid white;cursor:pointer">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 allSidesSoft link-preview-outer-div">
+                                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 link-preview-image-div-added center-all link-preview-image"
+                                                alt="www.youtube.com/watch?v=dIlmtkRZK8g" style="background: url(https://i.ytimg.com/vi/dIlmtkRZK8g/hqdefault.jpg) no-repeat center,#cdcdcd !important"><a
+                                                    class="video-btn-onlink-image"><i class="fas fa-play-circle"></i></a>
+                                                <div class="auto-resize-image-main-div"> <img src="https://i.ytimg.com/vi/dIlmtkRZK8g/hqdefault.jpg"
+                                                        class="link-preview-thumb-img"> </div>
+                                            </div>
+                                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 link-preview-content url-container-body">
+                                                <div class="col-sm-12" style="padding:5px 0 0 0;"> <a class="site-title pc"
+                                                        href="http://www.youtube.com/watch?v=dIlmtkRZK8g" target="_blank">How
+                                                        to control your Subconscious Mind? By Sandeep Maheshwari I
+                                                        Hindi..... </a> <a class="site-title mobile" href="http://www.youtube.com/watch?v=dIlmtkRZK8g"
+                                                        target="_blank">How to control your Subconscious Mind? By
+                                                        Sandeep Maheshwari I Hindi </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:5px 0 5px 0;word-wrap: break-word;">
+                                                    <a href="http://www.youtube.com/watch?v=dIlmtkRZK8g" target="_blank"
+                                                        style="word-wrap: break-word;color:black">"When your
+                                                        conscious mind and subconscious mind are properly aligned,
+                                                        YOU become Unstoppable." Sandeep Maheshwari is a name among
+                                                        millions who struggled, f </a> </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pc" style="padding:5px 0 5px 0;">
+                                                    <a class="site-name" href="http://www.youtube.com/watch?v=dIlmtkRZK8g"
+                                                        target="_blank">www.youtube.com/watch?v=dIlmtkRZK8g </a>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mobile" style="padding:5px 0 5px 0;bottom:0">
+                                                    <a class="site-name" href="http://www.youtube.com/watch?v=dIlmtkRZK8g"
+                                                        target="_blank">www.youtube.com/watch?v=dIlmtkRZK8g </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding:0;padding-top:10px;">
+                                <div class="col-sm-4 col-md-3 col-lg-2 col-xs-8"> <a class="comment-btn-discussion"
+                                        onclick="showCommentsAction('5bb8b8c3f2052e66cace1834',0)" id="showComments5bb8b8c3f2052e66cace1834">
+                                        <i class="fa fa-comment-alt"></i> 1 <mobilenone>comments</mobilenone> </a><a
+                                        class="show-comment-btn show-hide-comments comment-btn-discussion" onclick="hideCommentsAction('5bb8b8c3f2052e66cace1834')"
+                                        id="ShowHideComments5bb8b8c3f2052e66cace1834">Hide</a> </div>
+                            </div> <br>
+                            <ul class="panel-body all-comments-box" id="allCommentsContainer5bb8b8c3f2052e66cace1834"></ul>
+                            <div class="panel-body comment-panel" style="border:0;padding:0">
+                                <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 comment-box comment-compose-div-css"
+                                    style="border-top: 1px solid #DFDFDF;" id="composeCommentDiv5bb8b8c3f2052e66cace1834">
+                                    <div class="col-sm-1 col-md-1 col-xs-2"> <img src="/Upload/Profile/default.png"
+                                            class="discussion-comment-user"> </div>
+                                    <div class="col-sm-11 col-md-11 col-xs-10">
+                                        <div class="input-group reply-input"> <textarea type="text" autocomplete="off"
+                                                class="form-control input-md comment-textarea" id="textarea5bb8b8c3f2052e66cace1834"
+                                                placeholder="reply to this discussion..." rows="1" maxlength="1500"></textarea>
+                                            <span class="input-group-btn"> <button class="btn btn-warning btn-md post-discussion-btn"
+                                                    onclick="postComment('5bb8b8c3f2052e66cace1834')">Post</button>
+                                            </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="endLoader">
+            <center><img src="/app_pics/bg/loading.gif" class="loading" style="display: none;"></center>
+        </div>
+        <script src="/Plugins/js/vibrant.js"></script>
+        <script src="/javascripts/Common.js"></script>
+        <script src="/Plugins/js/notie.min.js"></script>
+        <script src="/javascripts/helper/DScrapingApi.js"></script>
+        <script src="/javascripts/helper/DiscussionHelper.js"></script>
+        <script src="/javascripts/Discussion.js"></script>
+        <script src="/javascripts/DiscussionComments.js"></script>
+        <script src="/Plugins/js/select2.min.js"></script>
+        <script src="/javascripts/TagsCustom.js"></script>
+        <script>
+            initDiscussion();
+            $(window).scroll(function () {
+                if ($(window).scrollTop() + $(window).height() > $(document).height() - 200) {
+                    if (!dis_wait && ScrollResponseWait) {
+                        ScrollResponseWait = false;
+                        $('.loading').css('display', 'block');
+                        initDiscussion();
+                    }
+                }
+            });
+        </script>
+        <script>
+            var selector = '.nav li';
+            $(selector).removeClass('active');
+            $('#community-panel-nav').addClass('active');
+        </script>
+
+
+    </div>
+</div>
+</div>
+
+</body>
+
+</html>

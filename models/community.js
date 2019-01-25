@@ -75,11 +75,6 @@ var communitySchema = new Schema({
     },
 
     /*
-    group admin array,
-    user array,invited user array,requests to join user array
-    tags:[
-        {type:String}
-    ],
 
     // discussions part-a post array having having posted by,date,tags,
     // description,featured yes or no,global(publish)yes or no,

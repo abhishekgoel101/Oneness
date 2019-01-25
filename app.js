@@ -15,6 +15,9 @@ var mongoose = require('mongoose');
 require('./models/connection');
 var User = require('./models/user');
 var Community = require('./models/community');
+var Post = require('./models/post');
+var Comment = require('./models/comment');
+
 var app = express();
 
 app.set('views', __dirname + '/views');
@@ -623,15 +626,15 @@ app.post('/admin/updatecommunity', authenticate, function (req, res) {
     var _id = req.body._id;
     var name = req.body.name;
     var status = req.body.status;
- 
+
     Community.findOneAndUpdate({ _id: _id }, { name: name, status: status }, function (err, result) {
         if (err) throw err;
         if (result) {
-        
-        return res.json({ success: "Community Update Success" });
-        
-    }
-    else {
+
+            return res.json({ success: "Community Update Success" });
+
+        }
+        else {
             return res.status(500).send({ error: 'Unable to update' });;
         }
 
@@ -647,11 +650,11 @@ app.post('/admin/getcommunityinfo', authenticate, function (req, res) {
     Community.findOne({ _id: _id }, 'description', function (err, result) {
         if (err) throw err;
         if (result) {
-        
-        return res.json(result);
-        
-    }
-    else {
+
+            return res.json(result);
+
+        }
+        else {
             return res.status(500).send({ error: 'Unable to get info' });;
         }
 
@@ -1433,14 +1436,30 @@ app.get('/community/communityprofile/:_id', authenticate, function (req, res) {
 
 });
 
+app.post('/community/communityprofile/getglobaldiscussions', authenticate, function (req, res) {
+
+    var community_id = req.body.community_id;
+
+    Post.find({ ofCommunity: community_id, deleted: false,global:true }).sort({ dateCreated: -1 }).populate('postedBy', '_id name image').lean().exec(function (err, result) {
+        if (err) throw err;
+
+        return res.json(result);
+
+    });
+
+});
+
+
 app.get('/community/discussion/:_id', authenticate, function (req, res) {
     var _id = req.params._id;
 
-    Community.findOne({ _id: _id }).populate('owner', '_id name image').populate('admins', '_id name image').populate('members', '_id name image').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
+    Community.findOne({ _id: _id }).populate('owner', '_id').populate('admins', '_id').populate('members', '_id').populate('requests', '_id').populate('invitedUsers', '_id').lean().exec(function (err, result) {
         if (err) throw err;
         if (result) {
 
             var type = userTypeForCommunity(req.session.header._id, result);
+            delete result.admins;
+            delete result.members;
             delete result.requests;
             delete result.invitedUsers;
 
@@ -1450,6 +1469,98 @@ app.get('/community/discussion/:_id', authenticate, function (req, res) {
         else {
             return res.redirect('/logout');
         }
+
+    });
+
+
+});
+
+app.post('/community/postdiscussion', authenticate, function (req, res) {
+
+    var user_id = req.session.header._id;
+    var community_id = req.body.community_id;
+    var title = req.body.title;
+    var description = req.body.description;
+
+    var tags = req.body.tags;
+    if (tags == null) {
+        tags = [];
+    }
+
+    var newPost = new Post({
+        _id: new mongoose.Types.ObjectId(),
+        title: title,
+        description: description,
+        postedBy: user_id,
+        ofCommunity: community_id,
+        tags: tags
+    });
+
+    newPost.save(function (err) {
+        if (err) throw err;
+        console.log('Post created');
+
+        return res.json({ success: "Discussion Create Success" });
+
+    });
+
+
+});
+
+app.post('/community/discussion/getdiscussions', authenticate, function (req, res) {
+
+    var community_id = req.body.community_id;
+
+    Post.find({ ofCommunity: community_id, deleted: false }).sort({ featured: -1, dateCreated: -1 }).populate('postedBy', '_id name image').lean().exec(function (err, result) {
+        if (err) throw err;
+
+        return res.json(result);
+
+    });
+
+});
+
+app.post('/community/deletediscussion', authenticate, function (req, res) {
+
+    var post_id = req.body.post_id;
+
+    Post.updateOne({ _id: post_id }, {
+        deleted: true
+    }, function (err) {
+        if (err) throw err;
+        return res.end();
+
+    });
+
+
+});
+
+app.post('/community/changefeatured', authenticate, function (req, res) {
+
+    var post_id = req.body.post_id;
+    var featured = req.body.featured;
+
+    Post.updateOne({ _id: post_id }, {
+        featured: featured
+    }, function (err) {
+        if (err) throw err;
+        return res.end();
+
+    });
+
+
+});
+
+app.post('/community/changeglobal', authenticate, function (req, res) {
+
+    var post_id = req.body.post_id;
+    var global = req.body.global;
+
+    Post.updateOne({ _id: post_id }, {
+        global: global
+    }, function (err) {
+        if (err) throw err;
+        return res.end();
 
     });
 

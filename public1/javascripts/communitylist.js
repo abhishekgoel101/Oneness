@@ -81,7 +81,7 @@ $(document).ready(function () {
 
         $('#_id').val(tds[0].innerHTML);
 
-        $('#CommuityName').val(tds[1].innerHTML);
+        $('#CommunityName').val(tds[1].innerHTML);
 
         $('#CommunityStatus').val(tds[8].innerHTML);
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var _id = $('#_id').val();
-        var name = ($('#CommuityName').val()).trim();
+        var name = ($('#CommunityName').val()).trim();
         var status = $('#CommunityStatus').val();
         var data = {};
         data._id = _id;
